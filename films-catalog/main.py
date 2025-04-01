@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 app = FastAPI(
     title="Films",
@@ -8,5 +8,11 @@ app = FastAPI(
 
 
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def root(
+    request: Request,
+):
+    docs_url = request.url.replace(path="/docs")
+    return {
+        "message": "Hello World",
+        "docs_url": str(docs_url),
+    }
