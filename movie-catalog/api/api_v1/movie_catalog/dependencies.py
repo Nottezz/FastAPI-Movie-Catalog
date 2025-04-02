@@ -1,14 +1,11 @@
 from fastapi import HTTPException, status
 
 from schemas.movie_catalog import Movie
-from .crud import MOVIE_LIST
+from .crud import storage
 
 
 def prefetch_film(movie_slug: str) -> Movie:
-    films: Movie | None = next(
-        (film for film in MOVIE_LIST if film.slug == movie_slug),
-        None,
-    )
+    films: Movie | None = storage.get_by_slug(movie_slug)
     if films:
         return films
 

@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 
 from schemas.movie_catalog import Movie, MovieCreate
-from .crud import MOVIE_LIST
+from .crud import storage
 from .dependencies import prefetch_film
 
 router = APIRouter(
@@ -18,7 +18,7 @@ router = APIRouter(
     response_model=list[Movie],
 )
 def get_movie_list() -> list[Movie]:
-    return MOVIE_LIST
+    return storage.get()
 
 
 @router.post(
@@ -29,9 +29,7 @@ def get_movie_list() -> list[Movie]:
 def add_movie(
     movie_create: MovieCreate,
 ) -> Movie:
-    return Movie(
-        **movie_create.model_dump(),
-    )
+    return storage.create(movie_create)
 
 
 @router.get("/{slug}", response_model=Movie)
