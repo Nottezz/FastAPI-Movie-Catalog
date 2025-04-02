@@ -30,13 +30,12 @@ def add_movie(
     movie_create: MovieCatalogCreate,
 ) -> MovieCatalog:
     return MovieCatalog(
-        id=random.randint(1, 100),
         **movie_create.model_dump(),
     )
 
 
-@router.get("/{movie_id}", response_model=MovieCatalog)
+@router.get("/{slug}", response_model=MovieCatalog)
 def get_movie(
-    movie_id: Annotated[MovieCatalog, Depends(prefetch_film)]
+    movie_slug: Annotated[MovieCatalog, Depends(prefetch_film)]
 ) -> MovieCatalog:
-    return movie_id
+    return movie_slug
