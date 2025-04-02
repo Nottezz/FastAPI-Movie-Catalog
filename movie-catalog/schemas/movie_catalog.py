@@ -13,6 +13,12 @@ class MovieCatalogCreate(MovieCatalogBase):
     Модель для создания фильмов
     """
 
+    slug: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+        title="Movie slug",
+    )
     title: str = Field(
         ...,
         min_length=3,
@@ -44,6 +50,4 @@ class MovieCatalog(MovieCatalogBase):
     Модель каталога фильмов
     """
 
-    id: int = Field(
-        ge=1,
-    )
+    slug: str
