@@ -2,14 +2,13 @@ from pydantic import BaseModel, Field
 
 
 class MovieCatalogBase(BaseModel):
-    id: int
     title: str
     description: str
     year_released: int
     rating: float
 
 
-class MovieCatalogCreate(BaseModel):
+class MovieCatalogCreate(MovieCatalogBase):
     """
     Модель для создания фильмов
     """
@@ -45,4 +44,6 @@ class MovieCatalog(MovieCatalogBase):
     Модель каталога фильмов
     """
 
-    pass
+    id: int = Field(
+        ge=1,
+    )
