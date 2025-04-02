@@ -4,9 +4,9 @@ from schemas.movie_catalog import MovieCatalog
 from .crud import MOVIE_LIST
 
 
-def prefetch_film(movie_id: int) -> MovieCatalog:
+def prefetch_film(movie_slug: str) -> MovieCatalog:
     films: MovieCatalog | None = next(
-        (film for film in MOVIE_LIST if film.id == movie_id),
+        (film for film in MOVIE_LIST if film.slug == movie_slug),
         None,
     )
     if films:
