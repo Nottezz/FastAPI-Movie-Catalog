@@ -1,14 +1,14 @@
 from pydantic import BaseModel, Field
 
 
-class MovieCatalogBase(BaseModel):
+class MovieBase(BaseModel):
     title: str
     description: str
     year_released: int
     rating: float
 
 
-class MovieCatalogCreate(MovieCatalogBase):
+class MovieCreate(MovieBase):
     """
     Модель для создания фильмов
     """
@@ -45,7 +45,7 @@ class MovieCatalogCreate(MovieCatalogBase):
     )
 
 
-class MovieCatalog(MovieCatalogBase):
+class Movie(MovieBase):
     """
     Модель каталога фильмов
     """
