@@ -1,16 +1,16 @@
-# Film Catalog
+# 🎞️ Movie Catalog
 
-## Develop
+## 🧑‍💻 Develop
 
 ### Setup
 
-`film-catalog` mark as Sources root
+`movie-catalog` mark as Sources root
 
 ### Run
 
 Go to workdir
 ```shell
-cd film-catalog
+cd movie-catalog
 ```
 
 Run dev server
