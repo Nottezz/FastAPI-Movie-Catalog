@@ -3,8 +3,8 @@ from fastapi import FastAPI, Request
 from api import router as api_router
 
 app = FastAPI(
-    title="Films",
-    description="Films catalog",
+    title="Movies",
+    description="Movie catalog",
     version="1.0",
 )
 app.include_router(api_router)
