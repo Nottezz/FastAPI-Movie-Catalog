@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, status
 
 from api.api_v1.movie_catalog.crud import storage
 from api.api_v1.movie_catalog.dependencies import prefetch_film
-from schemas.movie_catalog import Movie
+from schemas.movie_catalog import Movie, MovieUpdate
 
 router = APIRouter(
     prefix="/{slug}",
@@ -22,10 +22,17 @@ router = APIRouter(
     },
 )
 
+MovieBySlug = Annotated[Movie, Depends(prefetch_film)]
+
 
 @router.get("/", response_model=Movie)
-def get_movie(movie: Annotated[Movie, Depends(prefetch_film)]) -> Movie:
+def get_movie(movie: MovieBySlug) -> Movie:
     return movie
+
+
+@router.put("/", response_model=Movie)
+def update_movie(movie: MovieBySlug, movie_updated: MovieUpdate) -> Movie:
+    return storage.update(movie, movie_updated)
 
 
 @router.delete(
@@ -44,5 +51,5 @@ def get_movie(movie: Annotated[Movie, Depends(prefetch_film)]) -> Movie:
         }
     },
 )
-def delete_movie(movie: Annotated[Movie, Depends(prefetch_film)]) -> None:
+def delete_movie(movie: MovieBySlug) -> None:
     storage.delete(movie)
