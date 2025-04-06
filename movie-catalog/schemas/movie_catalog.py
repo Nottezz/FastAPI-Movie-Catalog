@@ -121,3 +121,4 @@ class Movie(MovieBase):
     """
 
     slug: str
+    note: str = ""
