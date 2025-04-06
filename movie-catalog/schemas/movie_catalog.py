@@ -77,6 +77,10 @@ class MovieUpdate(MovieBase):
 
 
 class MoviePartialUpdate(MovieBase):
+    """
+    Модель для частичного редактирования полей
+    """
+
     title: str | None = Field(
         None,
         min_length=3,
@@ -101,6 +105,14 @@ class MoviePartialUpdate(MovieBase):
         le=10.0,
         title="Movie rating",
     )
+
+
+class MovieRead(MovieBase):
+    """
+    Модель для чтения фильма
+    """
+
+    slug: str
 
 
 class Movie(MovieBase):
