@@ -1,7 +1,11 @@
+import logging
+
 from pydantic import BaseModel, ValidationError
 
 from config import STORAGE_PATH
 from schemas.movie_catalog import Movie, MovieCreate, MovieUpdate, MoviePartialUpdate
+
+logger = logging.getLogger(__name__)
 
 
 class MovieCatalogStorage(BaseModel):
@@ -9,10 +13,12 @@ class MovieCatalogStorage(BaseModel):
 
     def save_storage(self) -> None:
         STORAGE_PATH.write_text(self.model_dump_json(indent=2), encoding="utf-8")
+        logger.info("Finish saving movie catalog.")
 
     @classmethod
     def load_storage(cls) -> "MovieCatalogStorage":
         if not STORAGE_PATH.exists():
+            logger.warning("Movie catalog storage does not exist.")
             return MovieCatalogStorage()
         return cls.model_validate_json(STORAGE_PATH.read_text())
 
@@ -52,5 +58,8 @@ class MovieCatalogStorage(BaseModel):
 
 try:
     storage = MovieCatalogStorage.load_storage()
+    logger.warning("Movie catalog storage loaded from file.")
 except ValidationError:
     storage = MovieCatalogStorage()
+    storage.save_storage()
+    logger.warning("Movie catalog storage validation failed! File has been rewritten.")
