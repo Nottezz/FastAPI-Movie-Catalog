@@ -1,6 +1,14 @@
+import logging
+
 from fastapi import FastAPI, Request
 
+import config
 from api import router as api_router
+
+logging.basicConfig(
+    format=config.LOG_FORMAT,
+    level=config.LOG_LEVEL,
+)
 
 app = FastAPI(
     title="Movies",
