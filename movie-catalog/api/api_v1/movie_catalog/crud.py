@@ -45,12 +45,12 @@ class MovieCatalogStorage(BaseModel):
             **create_movie.model_dump(),
         )
         self.movie_catalog[create_movie.slug] = movie
-        self.save_storage()
+        logger.debug("Add movie <%s> to catalog.", create_movie.slug)
         return movie
 
     def delete_by_slug(self, slug: str) -> None:
         self.movie_catalog.pop(slug, None)
-        self.save_storage()
+        logger.debug("Remove movie <%s> from catalog.", slug)
 
     def delete(self, movie: Movie) -> None:
         self.delete_by_slug(movie.slug)
@@ -58,13 +58,13 @@ class MovieCatalogStorage(BaseModel):
     def update(self, movie: Movie, updated_movie: MovieUpdate) -> Movie:
         for field, value in updated_movie:
             setattr(movie, field, value)
-        self.save_storage()
+        logger.debug("Update movie <%s>.", movie.slug)
         return movie
 
     def partial_update(self, movie: Movie, updated_movie: MoviePartialUpdate) -> Movie:
         for field, value in updated_movie.model_dump(exclude_unset=True).items():
             setattr(movie, field, value)
-        self.save_storage()
+        logger.debug("Partial update movie <%s>.", movie.slug)
         return movie
 
 
