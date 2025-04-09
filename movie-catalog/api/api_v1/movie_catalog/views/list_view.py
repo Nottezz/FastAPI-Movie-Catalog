@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, BackgroundTasks
 
 from schemas.movie_catalog import Movie, MovieCreate, MovieRead
 from api.api_v1.movie_catalog.crud import storage
@@ -24,5 +24,7 @@ def get_movie_list() -> list[Movie]:
 )
 def add_movie(
     movie_create: MovieCreate,
+    background_tasks: BackgroundTasks,
 ) -> Movie:
+    background_tasks.add_task(storage.save_storage)
     return storage.create(movie_create)
