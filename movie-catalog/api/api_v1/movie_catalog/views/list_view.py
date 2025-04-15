@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends
 
 from api.api_v1.movie_catalog.crud import storage
-from api.api_v1.movie_catalog.dependencies import save_storage_state
+from api.api_v1.movie_catalog.dependencies import save_storage_state, validate_api_token
 from schemas.movie_catalog import Movie, MovieCreate, MovieRead
 
 router = APIRouter(
@@ -23,9 +23,22 @@ def get_movie_list() -> list[Movie]:
     "/",
     response_model=MovieRead,
     status_code=status.HTTP_201_CREATED,
+    responses={
+        status.HTTP_401_UNAUTHORIZED: {
+            "description": "Invalid API token",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Invalid API token",
+                    }
+                }
+            },
+        },
+    },
 )
 def add_movie(
     movie_create: MovieCreate,
-    _=Depends(save_storage_state),
+    _=Depends(validate_api_token),
+    __=Depends(save_storage_state),
 ) -> Movie:
     return storage.create(movie_create)

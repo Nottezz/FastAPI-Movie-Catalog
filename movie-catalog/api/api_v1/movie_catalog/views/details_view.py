@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status, BackgroundTasks
 
 from api.api_v1.movie_catalog.crud import storage
-from api.api_v1.movie_catalog.dependencies import prefetch_film
+from api.api_v1.movie_catalog.dependencies import prefetch_film, validate_api_token
 from schemas.movie_catalog import Movie, MovieUpdate, MoviePartialUpdate, MovieRead
 
 router = APIRouter(
@@ -18,7 +18,17 @@ router = APIRouter(
                     }
                 }
             },
-        }
+        },
+        status.HTTP_401_UNAUTHORIZED: {
+            "description": "Invalid API token",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Invalid API token",
+                    }
+                }
+            },
+        },
     },
 )
 
@@ -34,6 +44,7 @@ def get_movie(movie: MovieBySlug) -> Movie:
 def update_movie(
     movie: MovieBySlug,
     movie_updated: MovieUpdate,
+    _=Depends(validate_api_token),
 ) -> Movie:
     return storage.update(movie, movie_updated)
 
@@ -42,6 +53,7 @@ def update_movie(
 def partial_update_movie(
     movie: MovieBySlug,
     movie_partial: MoviePartialUpdate,
+    _=Depends(validate_api_token),
 ) -> Movie:
     return storage.partial_update(movie, movie_partial)
 
@@ -64,5 +76,6 @@ def partial_update_movie(
 )
 def delete_movie(
     movie: MovieBySlug,
+    _=Depends(validate_api_token),
 ) -> None:
     storage.delete(movie)
