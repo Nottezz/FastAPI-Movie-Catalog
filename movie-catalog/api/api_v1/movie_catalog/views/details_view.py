@@ -29,6 +29,16 @@ router = APIRouter(
                 }
             },
         },
+        status.HTTP_403_FORBIDDEN: {
+            "description": "API token is required",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "API token is required",
+                    }
+                }
+            },
+        },
     },
 )
 

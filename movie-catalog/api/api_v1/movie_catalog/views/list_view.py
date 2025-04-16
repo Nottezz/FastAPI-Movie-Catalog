@@ -34,6 +34,16 @@ def get_movie_list() -> list[Movie]:
                 }
             },
         },
+        status.HTTP_403_FORBIDDEN: {
+            "description": "API token is required",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "API token is required",
+                    }
+                }
+            },
+        },
     },
 )
 def add_movie(
