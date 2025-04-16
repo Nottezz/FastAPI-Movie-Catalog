@@ -1,6 +1,7 @@
 import logging
+from typing import Annotated
 
-from fastapi import HTTPException, status, BackgroundTasks, Request
+from fastapi import HTTPException, status, BackgroundTasks, Request, Header
 
 from config import API_TOKENS
 from schemas.movie_catalog import Movie
@@ -34,7 +35,7 @@ def save_storage_state(background_tasks: BackgroundTasks, request: Request):
         background_tasks.add_task(storage.save_storage)
 
 
-def validate_api_token(api_token: str):
+def validate_api_token(api_token: Annotated[str, Header(alias="x-auth-token")]):
     if api_token not in API_TOKENS:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
