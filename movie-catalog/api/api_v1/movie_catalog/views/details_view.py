@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, status, BackgroundTasks
 from api.api_v1.movie_catalog.crud import storage
 from api.api_v1.movie_catalog.dependencies import (
     prefetch_film,
-    user_basic_auth_required,
+    api_token_or_user_basic_auth_required,
 )
 from schemas.movie_catalog import Movie, MovieUpdate, MoviePartialUpdate, MovieRead
 
@@ -23,21 +23,21 @@ router = APIRouter(
             },
         },
         status.HTTP_401_UNAUTHORIZED: {
-            "description": "Invalid API token",
+            "description": "Invalid API token or username and password",
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Invalid API token",
+                        "detail": "Invalid API token or username and password",
                     }
                 }
             },
         },
         status.HTTP_403_FORBIDDEN: {
-            "description": "API token is required",
+            "description": "API token or Basic auth is required",
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "API token is required",
+                        "detail": "API token or Basic auth is required",
                     }
                 }
             },
@@ -57,7 +57,7 @@ def get_movie(movie: MovieBySlug) -> Movie:
     "/",
     response_model=MovieRead,
     dependencies=[
-        Depends(user_basic_auth_required),
+        Depends(api_token_or_user_basic_auth_required),
     ],
 )
 def update_movie(
@@ -71,7 +71,7 @@ def update_movie(
     "/",
     response_model=MovieRead,
     dependencies=[
-        Depends(user_basic_auth_required),
+        Depends(api_token_or_user_basic_auth_required),
     ],
 )
 def partial_update_movie(
@@ -85,7 +85,7 @@ def partial_update_movie(
     "/",
     status_code=status.HTTP_204_NO_CONTENT,
     dependencies=[
-        Depends(user_basic_auth_required),
+        Depends(api_token_or_user_basic_auth_required),
     ],
     responses={
         status.HTTP_404_NOT_FOUND: {

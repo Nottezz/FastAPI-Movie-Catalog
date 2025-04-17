@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 STORAGE_PATH = BASE_DIR / "movie-catalog.json"
 LOG_FORMAT = "[%(levelname)s] (%(asctime)s) %(module)s-%(lineno)d: %(message)s"
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 
 API_TOKENS: frozenset[str] = frozenset(  # todo: remove
     {
@@ -12,3 +12,8 @@ API_TOKENS: frozenset[str] = frozenset(  # todo: remove
         "SYULJUtCQRLyeF2iqt-IGA",
     }
 )
+
+USERS_DB: dict[str, str] = {  # todo: remove
+    "sam": "password",
+    "bob": "qwerty",
+}
