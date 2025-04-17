@@ -3,7 +3,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status, BackgroundTasks
 
 from api.api_v1.movie_catalog.crud import storage
-from api.api_v1.movie_catalog.dependencies import prefetch_film, validate_api_token
+from api.api_v1.movie_catalog.dependencies import (
+    prefetch_film,
+    user_basic_auth_required,
+)
 from schemas.movie_catalog import Movie, MovieUpdate, MoviePartialUpdate, MovieRead
 
 router = APIRouter(
@@ -50,20 +53,30 @@ def get_movie(movie: MovieBySlug) -> Movie:
     return movie
 
 
-@router.put("/", response_model=MovieRead)
+@router.put(
+    "/",
+    response_model=MovieRead,
+    dependencies=[
+        Depends(user_basic_auth_required),
+    ],
+)
 def update_movie(
     movie: MovieBySlug,
     movie_updated: MovieUpdate,
-    _=Depends(validate_api_token),
 ) -> Movie:
     return storage.update(movie, movie_updated)
 
 
-@router.patch("/", response_model=MovieRead)
+@router.patch(
+    "/",
+    response_model=MovieRead,
+    dependencies=[
+        Depends(user_basic_auth_required),
+    ],
+)
 def partial_update_movie(
     movie: MovieBySlug,
     movie_partial: MoviePartialUpdate,
-    _=Depends(validate_api_token),
 ) -> Movie:
     return storage.partial_update(movie, movie_partial)
 
@@ -71,6 +84,9 @@ def partial_update_movie(
 @router.delete(
     "/",
     status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[
+        Depends(user_basic_auth_required),
+    ],
     responses={
         status.HTTP_404_NOT_FOUND: {
             "description": "Movie not found",
@@ -86,6 +102,5 @@ def partial_update_movie(
 )
 def delete_movie(
     movie: MovieBySlug,
-    _=Depends(validate_api_token),
 ) -> None:
     storage.delete(movie)
