@@ -12,7 +12,7 @@ from fastapi.security import (
 from config import USERS_DB
 from schemas.movie_catalog import Movie
 from .crud import storage
-from .redis import redis_tokens
+from ..auth.services import redis_tokens, redis_users
 
 logger = logging.getLogger(__name__)
 
@@ -82,10 +82,8 @@ def api_token_required(
 def validate_basic_auth(credentials: HTTPBasicCredentials | None):
     logger.debug("User credentials: %s", credentials)
 
-    if (
-        credentials
-        and credentials.username in USERS_DB
-        and USERS_DB[credentials.username] == credentials.password
+    if redis_users.validate_user_password(
+        username=credentials.username, password=credentials.password
     ):
         return
 
