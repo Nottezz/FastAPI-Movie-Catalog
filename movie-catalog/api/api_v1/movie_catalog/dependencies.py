@@ -9,7 +9,6 @@ from fastapi.security import (
     HTTPAuthorizationCredentials,
 )
 
-import config
 from config import USERS_DB
 from schemas.movie_catalog import Movie
 from .crud import storage
@@ -57,7 +56,7 @@ def save_storage_state(background_tasks: BackgroundTasks, request: Request):
 def validate_api_token(api_token: HTTPAuthorizationCredentials):
 
     logger.debug("API token: %s", api_token)
-    if redis_tokens.sismember(config.REDIS_TOKENS_SET_NAME, api_token.credentials):
+    if redis_tokens.token_exists(api_token.credentials):
         return
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
