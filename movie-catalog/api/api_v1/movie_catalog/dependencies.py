@@ -9,7 +9,6 @@ from fastapi.security import (
     HTTPAuthorizationCredentials,
 )
 
-from config import USERS_DB
 from schemas.movie_catalog import Movie
 from .crud import storage
 from ..auth.services import redis_tokens, redis_users
