@@ -1,4 +1,5 @@
 import logging
+import json
 from redis import Redis
 from pydantic import BaseModel, ValidationError
 
@@ -47,7 +48,11 @@ class MovieCatalogStorage(BaseModel):
         return list(self.movie_catalog.values())
 
     def get_by_slug(self, slug: str) -> Movie | None:
-        return self.movie_catalog.get(slug, None)
+        if redis.hexists(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug):
+            return Movie.model_validate_json(
+                redis.hget(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug)
+            )
+        return None
 
     def create(self, create_movie: MovieCreate) -> Movie:
         movie = Movie(
