@@ -45,7 +45,10 @@ class MovieCatalogStorage(BaseModel):
         logger.warning("Recovered data from storage file.")
 
     def get(self) -> list[Movie]:
-        return list(self.movie_catalog.values())
+        return [
+            Movie.model_validate_json(value)
+            for value in redis.hvals(name=REDIS_MOVIE_CATALOG_HASH_NAME)
+        ]
 
     def get_by_slug(self, slug: str) -> Movie | None:
         if data := redis.hget(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug):
