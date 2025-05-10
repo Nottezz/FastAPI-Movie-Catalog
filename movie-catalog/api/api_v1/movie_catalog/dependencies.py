@@ -36,12 +36,12 @@ user_basic_auth = HTTPBasic(
 )
 
 
-def prefetch_film(movie_slug: str) -> Movie:
-    films: Movie | None = storage.get_by_slug(movie_slug)
+def prefetch_film(slug: str) -> Movie:
+    films: Movie | None = storage.get_by_slug(slug)
     if films:
         return films
     raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie {movie_slug!r} not found"
+        status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie {slug!r} not found"
     )
 
 
