@@ -25,6 +25,14 @@ class MovieCatalogStorage(BaseModel):
         STORAGE_PATH.write_text(self.model_dump_json(indent=2), encoding="utf-8")
         logger.info("Finish saving movie catalog.")
 
+    def save_data(self, movie: Movie) -> None:
+        redis.hset(
+            name=REDIS_MOVIE_CATALOG_HASH_NAME,
+            key=movie.slug,
+            value=movie.model_dump_json(),
+        )
+        logger.debug("Finish saving data to redis.")
+
     @classmethod
     def load_storage(cls) -> "MovieCatalogStorage":
         if not STORAGE_PATH.exists():
@@ -59,11 +67,7 @@ class MovieCatalogStorage(BaseModel):
         movie = Movie(
             **create_movie.model_dump(),
         )
-        redis.hset(
-            name=REDIS_MOVIE_CATALOG_HASH_NAME,
-            key=movie.slug,
-            value=movie.model_dump_json(),
-        )
+        self.save_data(movie)
         logger.debug("Add movie <%s> to catalog.", create_movie.slug)
         return movie
 
