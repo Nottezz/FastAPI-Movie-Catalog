@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 
-from api.api_v1.movie_catalog.crud import storage
+from api.api_v1.movie_catalog.crud import storage, MovieCatalogAlreadyExists
 from api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
 )
@@ -33,7 +33,7 @@ def get_movie_list() -> list[Movie]:
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Invalid API token or username and password",
+                        "detail": "Invalid API token or username and password.",
                     }
                 }
             },
@@ -43,7 +43,7 @@ def get_movie_list() -> list[Movie]:
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "API token or Basic auth is required",
+                        "detail": "API token or Basic auth is required.",
                     }
                 }
             },
@@ -63,10 +63,10 @@ def get_movie_list() -> list[Movie]:
 def add_movie(
     movie_create: MovieCreate,
 ) -> Movie:
-    if not storage.get_by_slug(movie_create.slug):
-        return storage.create(movie_create)
-
-    raise HTTPException(
-        status_code=status.HTTP_409_CONFLICT,
-        detail=f"Movie with slug <{movie_create.slug}> already exists.",
-    )
+    try:
+        return storage.create_or_rise_if_exists(movie_create)
+    except MovieCatalogAlreadyExists:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Movie with slug <{movie_create.slug}> already exists.",
+        )

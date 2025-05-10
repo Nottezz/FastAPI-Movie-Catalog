@@ -17,7 +17,7 @@ router = APIRouter(
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Movie 'slug' not found",
+                        "detail": "Movie 'slug' not found.",
                     }
                 }
             },
@@ -27,7 +27,7 @@ router = APIRouter(
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Invalid API token or username and password",
+                        "detail": "Invalid API token or username and password.",
                     }
                 }
             },
@@ -37,7 +37,7 @@ router = APIRouter(
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "API token or Basic auth is required",
+                        "detail": "API token or Basic auth is required.",
                     }
                 }
             },

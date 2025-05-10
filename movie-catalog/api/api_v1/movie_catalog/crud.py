@@ -18,6 +18,14 @@ redis = Redis(
 )
 
 
+class MovieCatalogBaseError(Exception):
+    pass
+
+
+class MovieCatalogAlreadyExists(MovieCatalogBaseError):
+    pass
+
+
 class MovieCatalogStorage(BaseModel):
     movie_catalog: dict[str, Movie] = {}
 
@@ -40,6 +48,9 @@ class MovieCatalogStorage(BaseModel):
             return Movie.model_validate_json(data)
         return None
 
+    def exists(self, slug: str) -> bool:
+        return redis.hexists(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug)
+
     def create(self, create_movie: MovieCreate) -> Movie:
         movie = Movie(
             **create_movie.model_dump(),
@@ -47,6 +58,13 @@ class MovieCatalogStorage(BaseModel):
         self.save_data(movie)
         logger.debug("Add movie <%s> to catalog.", create_movie.slug)
         return movie
+
+    def create_or_rise_if_exists(self, create_movie: MovieCreate) -> Movie:
+        if not self.exists(create_movie.slug):
+            return self.create(create_movie)
+
+        logger.error("Movie with slug <%s> already exists.", create_movie.slug)
+        raise MovieCatalogAlreadyExists(create_movie.slug)
 
     def delete_by_slug(self, slug: str) -> None:
         redis.hdel(REDIS_MOVIE_CATALOG_HASH_NAME, slug)
