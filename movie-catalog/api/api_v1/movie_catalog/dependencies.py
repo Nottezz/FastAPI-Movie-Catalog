@@ -1,7 +1,7 @@
 import logging
 from typing import Annotated
 
-from fastapi import HTTPException, status, BackgroundTasks, Request, Depends
+from fastapi import HTTPException, status, Depends
 from fastapi.security import (
     HTTPBasic,
     HTTPBasicCredentials,
@@ -45,15 +45,7 @@ def prefetch_film(slug: str) -> Movie:
     )
 
 
-def save_storage_state(background_tasks: BackgroundTasks, request: Request):
-    yield
-    if request.method in UNSAFE_METHOD:
-        logger.debug("Add background tasks to save storage")
-        background_tasks.add_task(storage.save_storage)
-
-
 def validate_api_token(api_token: HTTPAuthorizationCredentials):
-
     logger.debug("API token: %s", api_token)
     if redis_tokens.token_exists(api_token.credentials):
         return

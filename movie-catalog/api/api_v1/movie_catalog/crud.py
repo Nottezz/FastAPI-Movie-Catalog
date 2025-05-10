@@ -21,10 +21,6 @@ redis = Redis(
 class MovieCatalogStorage(BaseModel):
     movie_catalog: dict[str, Movie] = {}
 
-    def save_storage(self) -> None:
-        STORAGE_PATH.write_text(self.model_dump_json(indent=2), encoding="utf-8")
-        logger.info("Finish saving movie catalog.")
-
     def save_data(self, movie: Movie) -> None:
         redis.hset(
             name=REDIS_MOVIE_CATALOG_HASH_NAME,
@@ -32,25 +28,6 @@ class MovieCatalogStorage(BaseModel):
             value=movie.model_dump_json(),
         )
         logger.debug("Finish saving data to redis.")
-
-    @classmethod
-    def load_storage(cls) -> "MovieCatalogStorage":
-        if not STORAGE_PATH.exists():
-            logger.warning("Movie catalog storage does not exist.")
-            return MovieCatalogStorage()
-        return cls.model_validate_json(STORAGE_PATH.read_text())
-
-    def init_storage_from_state(self) -> None:
-        try:
-            data = MovieCatalogStorage.load_storage()
-        except ValidationError:
-            self.save_storage()
-            logger.warning(
-                "Movie catalog storage validation failed! File has been rewritten."
-            )
-            return
-        self.movie_catalog.update(data.movie_catalog)
-        logger.warning("Recovered data from storage file.")
 
     def get(self) -> list[Movie]:
         return [
