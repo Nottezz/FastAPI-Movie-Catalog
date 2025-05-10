@@ -81,12 +81,14 @@ class MovieCatalogStorage(BaseModel):
     def update(self, movie: Movie, updated_movie: MovieUpdate) -> Movie:
         for field, value in updated_movie:
             setattr(movie, field, value)
+        self.save_data(movie)
         logger.debug("Update movie <%s>.", movie.slug)
         return movie
 
     def partial_update(self, movie: Movie, updated_movie: MoviePartialUpdate) -> Movie:
         for field, value in updated_movie.model_dump(exclude_unset=True).items():
             setattr(movie, field, value)
+        self.save_data(movie)
         logger.debug("Partial update movie <%s>.", movie.slug)
         return movie
 
