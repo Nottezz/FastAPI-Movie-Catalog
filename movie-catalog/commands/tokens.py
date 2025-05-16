@@ -36,3 +36,32 @@ def list_tokens():
     print(Markdown("# Available tokens:"))
     print(Markdown("\n1. ".join([""] + redis_tokens.get_tokens())))
     print()
+
+
+@app.command(name="create")
+def create_token():
+    """
+    Create a new token.
+    """
+    print("Start creating a new token...")
+    token = redis_tokens.generate_and_save_token()
+    print(f"Token created: [bold]{token}[/bold]")
+
+
+@app.command(name="delete")
+def delete_token(token: Annotated[str, typer.Argument(help="The token to delete")]):
+    """
+    Delete a token.
+    """
+    print("Start deleting a token...")
+    redis_tokens.delete_token(token)
+    print(f"Token deleted: [bold]{token}[/bold]")
+
+
+@app.command(name="add")
+def add_token(token: Annotated[str, typer.Argument(help="The token to add")]):
+    """
+    Add token to database.
+    """
+    redis_tokens.add_token(token)
+    print(f"Token added: [bold]{token}[/bold]")
