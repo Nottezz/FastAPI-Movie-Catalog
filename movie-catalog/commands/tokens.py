@@ -54,6 +54,9 @@ def delete_token(token: Annotated[str, typer.Argument(help="The token to delete"
     Delete a token.
     """
     print("Start deleting a token...")
+    if not redis_tokens.token_exists(token):
+        print(f"Token [bold]{token}[/bold] [red]does not exist[/red].")
+        return
     redis_tokens.delete_token(token)
     print(f"Token deleted: [bold]{token}[/bold]")
 
