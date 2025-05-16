@@ -5,6 +5,7 @@ from config import REDIS_HOST, REDIS_PORT, REDIS_DB_TOKENS, REDIS_TOKENS_SET_NAM
 
 
 class RedisTokensHelper(AbstractTokensHelper):
+
     def __init__(self, host: str, port: int, db: int, tokens_set_name: str) -> None:
         self.redis = Redis(host=host, port=port, db=db, decode_responses=True)
         self.tokens_set = tokens_set_name
@@ -14,6 +15,9 @@ class RedisTokensHelper(AbstractTokensHelper):
 
     def add_token(self, token: str) -> None:
         self.redis.sadd(self.tokens_set, token)
+
+    def get_tokens(self) -> list[str]:
+        return list(self.redis.smembers(self.tokens_set))
 
 
 redis_tokens = RedisTokensHelper(

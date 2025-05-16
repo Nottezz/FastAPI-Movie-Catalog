@@ -21,6 +21,14 @@ class AbstractTokensHelper(ABC):
         """
         pass
 
+    @abstractmethod
+    def get_tokens(self) -> list[str]:
+        """
+        Get list of tokens.
+        :return:
+        """
+        pass
+
     @classmethod
     def generate_token(cls) -> str:
         return secrets.token_urlsafe(16)
