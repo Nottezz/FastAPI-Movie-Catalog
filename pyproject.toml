@@ -17,5 +17,8 @@ dev = [
 ]
 
 [tool.mypy]
+plugins = [
+    "pydantic.mypy",
+]
 strict = true
 ignore_missing_imports = true
