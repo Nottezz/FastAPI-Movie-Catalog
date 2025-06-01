@@ -1,3 +1,4 @@
+__all__ = ("app",)
 from typing import Annotated
 
 from api.api_v1.auth.services import redis_tokens
@@ -14,7 +15,7 @@ app = typer.Typer(
 
 
 @app.command()
-def check(token: Annotated[str, typer.Argument(help="The token to check")]):
+def check(token: Annotated[str, typer.Argument(help="The token to check")]) -> None:
     """
     Check if the passed token is valid - exists or not.
     """
@@ -29,7 +30,7 @@ def check(token: Annotated[str, typer.Argument(help="The token to check")]):
 
 
 @app.command(name="list")
-def list_tokens():
+def list_tokens() -> None:
     """
     List all tokens.
     """
@@ -39,7 +40,7 @@ def list_tokens():
 
 
 @app.command(name="create")
-def create_token():
+def create_token() -> None:
     """
     Create a new token.
     """
@@ -49,7 +50,9 @@ def create_token():
 
 
 @app.command(name="delete")
-def delete_token(token: Annotated[str, typer.Argument(help="The token to delete")]):
+def delete_token(
+    token: Annotated[str, typer.Argument(help="The token to delete")]
+) -> None:
     """
     Delete a token.
     """
@@ -62,7 +65,7 @@ def delete_token(token: Annotated[str, typer.Argument(help="The token to delete"
 
 
 @app.command(name="add")
-def add_token(token: Annotated[str, typer.Argument(help="The token to add")]):
+def add_token(token: Annotated[str, typer.Argument(help="The token to add")]) -> None:
     """
     Add token to database.
     """

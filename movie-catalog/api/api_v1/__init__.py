@@ -1,3 +1,4 @@
+__all__ = ("router",)
 from fastapi import APIRouter
 
 from .movie_catalog.views import router as movie_catalog_router

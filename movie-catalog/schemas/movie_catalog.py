@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import cast
 
 
 class MovieBase(BaseModel):
@@ -76,7 +77,7 @@ class MovieUpdate(MovieBase):
     )
 
 
-class MoviePartialUpdate(MovieBase):
+class MoviePartialUpdate(BaseModel):
     """
     Модель для частичного редактирования полей
     """
@@ -89,9 +90,9 @@ class MoviePartialUpdate(MovieBase):
     )
     description: str | None = Field(
         None,
-        title="Movie description",
         min_length=20,
         max_length=500,
+        title="Movie description",
     )
     year_released: int | None = Field(
         None,

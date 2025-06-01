@@ -2,6 +2,7 @@ import logging
 import json
 from redis import Redis
 from pydantic import BaseModel, ValidationError
+from typing import cast
 
 from config import (
     STORAGE_PATH,
@@ -40,7 +41,7 @@ class MovieCatalogStorage(BaseModel):
     def get(self) -> list[Movie]:
         return [
             Movie.model_validate_json(value)
-            for value in redis.hvals(name=REDIS_MOVIE_CATALOG_HASH_NAME)
+            for value in cast(set[str], redis.hvals(name=REDIS_MOVIE_CATALOG_HASH_NAME))
         ]
 
     def get_by_slug(self, slug: str) -> Movie | None:
@@ -49,7 +50,7 @@ class MovieCatalogStorage(BaseModel):
         return None
 
     def exists(self, slug: str) -> bool:
-        return redis.hexists(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug)
+        return bool(redis.hexists(name=REDIS_MOVIE_CATALOG_HASH_NAME, key=slug))
 
     def create(self, create_movie: MovieCreate) -> Movie:
         movie = Movie(

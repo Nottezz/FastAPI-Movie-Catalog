@@ -1,3 +1,4 @@
+__all__ = ("router",)
 from fastapi import APIRouter, status, Depends, HTTPException
 
 from api.api_v1.movie_catalog.crud import storage, MovieCatalogAlreadyExists
@@ -6,7 +7,7 @@ from api.api_v1.movie_catalog.dependencies import (
 )
 from schemas.movie_catalog import Movie, MovieCreate, MovieRead
 
-router = APIRouter(
+router: APIRouter = APIRouter(
     prefix="/movies",
     tags=["Movies"],
 )

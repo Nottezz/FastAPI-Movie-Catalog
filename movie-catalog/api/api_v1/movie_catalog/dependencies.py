@@ -45,7 +45,7 @@ def prefetch_film(slug: str) -> Movie:
     )
 
 
-def validate_api_token(api_token: HTTPAuthorizationCredentials):
+def validate_api_token(api_token: HTTPAuthorizationCredentials) -> None:
     logger.debug("API token: %s", api_token)
     if redis_tokens.token_exists(api_token.credentials):
         return
@@ -59,7 +59,7 @@ def api_token_required(
     api_token: Annotated[
         HTTPAuthorizationCredentials | None, Depends(static_api_token)
     ] = None,
-):
+) -> None:
 
     if not api_token:
         raise HTTPException(
@@ -70,7 +70,7 @@ def api_token_required(
     validate_api_token(api_token=api_token)
 
 
-def validate_basic_auth(credentials: HTTPBasicCredentials | None):
+def validate_basic_auth(credentials: HTTPBasicCredentials | None) -> None:
     logger.debug("User credentials: %s", credentials)
 
     if credentials and redis_users.validate_user_password(
@@ -87,7 +87,7 @@ def validate_basic_auth(credentials: HTTPBasicCredentials | None):
 
 def user_basic_auth_required(
     credentials: Annotated[HTTPBasicCredentials | None, Depends(user_basic_auth)] = None
-):
+) -> None:
     validate_basic_auth(credentials=credentials)
 
 
@@ -98,7 +98,7 @@ def api_token_or_user_basic_auth_required(
     credentials: Annotated[
         HTTPBasicCredentials | None, Depends(user_basic_auth)
     ] = None,
-):
+) -> None:
     if credentials:
         return validate_basic_auth(credentials=credentials)
     if api_token:
