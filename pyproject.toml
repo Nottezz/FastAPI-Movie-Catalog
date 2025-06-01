@@ -66,11 +66,18 @@ indent-width = 4
 target-version = "py312"
 
 [tool.ruff.lint]
-# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`) codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.
 select = [
-    "FAST",
+    "ANN", # flake8-annotations (ANN)
+    "FAST", # FastAPI (FAST)
+    "I",  # isort (I)
+    "F401", # Pyflakes (F)
+    "S", # flake8-bandit (S)
+    "LOG", # flake8-logging (LOG)
+    "PT", # flake8-pytest-style (PT)
+    "RET", # flake8-return (RET)
+    "ARG", # flake8-unused-arguments (ARG)
+    "T20", # flake8-print (T20)
+    # "ASYNC", # flake8-async (ASYNC)
 ]
 ignore = [
 
@@ -79,3 +86,8 @@ ignore = [
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
 unfixable = []
+
+[tool.ruff.lint.extend-per-file-ignores]
+"stuff.py" = [
+    "T20",
+]
