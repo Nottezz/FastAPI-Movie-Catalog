@@ -8,4 +8,14 @@ dependencies = [
     "fastapi[standard]>=0.115.12",
     "redis[hiredis]>=6.0.0",
     "typer>=0.15.2",
+    "types-redis>=4.6.0.20241004",
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.16.0",
+]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
