@@ -6,6 +6,22 @@
 
 `movie-catalog` mark as Sources root
 
+
+
+### Install
+
+Install packages
+```shell
+uv install
+```
+
+### Configure pre-commit
+
+Install pre-commit hook:
+```shell
+pre-commit install
+```
+
 ### Run
 
 Go to workdir
