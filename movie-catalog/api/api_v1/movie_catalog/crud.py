@@ -1,17 +1,16 @@
 import logging
-import json
-from redis import Redis
-from pydantic import BaseModel, ValidationError
 from typing import cast
 
+from pydantic import BaseModel
+from redis import Redis
+
 from config import (
-    STORAGE_PATH,
-    REDIS_HOST,
-    REDIS_PORT,
     REDIS_DB_MOVIE_CATALOG,
+    REDIS_HOST,
     REDIS_MOVIE_CATALOG_HASH_NAME,
+    REDIS_PORT,
 )
-from schemas.movie_catalog import Movie, MovieCreate, MovieUpdate, MoviePartialUpdate
+from schemas.movie_catalog import Movie, MovieCreate, MoviePartialUpdate, MovieUpdate
 
 logger = logging.getLogger(__name__)
 redis = Redis(

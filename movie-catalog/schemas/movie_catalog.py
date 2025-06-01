@@ -1,5 +1,5 @@
+
 from pydantic import BaseModel, Field
-from typing import cast
 
 
 class MovieBase(BaseModel):

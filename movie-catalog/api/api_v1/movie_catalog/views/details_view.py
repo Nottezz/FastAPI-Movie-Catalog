@@ -1,13 +1,13 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, status, BackgroundTasks
+from fastapi import APIRouter, Depends, status
 
 from api.api_v1.movie_catalog.crud import storage
 from api.api_v1.movie_catalog.dependencies import (
-    prefetch_film,
     api_token_or_user_basic_auth_required,
+    prefetch_film,
 )
-from schemas.movie_catalog import Movie, MovieUpdate, MoviePartialUpdate, MovieRead
+from schemas.movie_catalog import Movie, MoviePartialUpdate, MovieRead, MovieUpdate
 
 router = APIRouter(
     prefix="/{slug}",

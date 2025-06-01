@@ -1,17 +1,18 @@
 import logging
 from typing import Annotated
 
-from fastapi import HTTPException, status, Depends
+from fastapi import Depends, HTTPException, status
 from fastapi.security import (
+    HTTPAuthorizationCredentials,
     HTTPBasic,
     HTTPBasicCredentials,
     HTTPBearer,
-    HTTPAuthorizationCredentials,
 )
 
 from schemas.movie_catalog import Movie
-from .crud import storage
+
 from ..auth.services import redis_tokens, redis_users
+from .crud import storage
 
 logger = logging.getLogger(__name__)
 

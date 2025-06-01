@@ -1,7 +1,7 @@
 __all__ = ("router",)
-from fastapi import APIRouter, status, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 
-from api.api_v1.movie_catalog.crud import storage, MovieCatalogAlreadyExists
+from api.api_v1.movie_catalog.crud import MovieCatalogAlreadyExists, storage
 from api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
 )
