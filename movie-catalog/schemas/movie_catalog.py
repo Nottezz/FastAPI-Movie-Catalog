@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, Field
 
 
@@ -34,7 +33,7 @@ class MovieCreate(MovieBase):
     )
     year_released: int = Field(
         1900,
-        ge=0,
+        ge=1900,
         le=9999,
         title="Year released",
     )
@@ -96,7 +95,7 @@ class MoviePartialUpdate(BaseModel):
     )
     year_released: int | None = Field(
         None,
-        ge=0,
+        ge=1900,
         le=9999,
         title="Year released",
     )
