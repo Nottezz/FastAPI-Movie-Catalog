@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from pydantic import ValidationError
+
 from schemas.movie_catalog import MovieCreate, MovieUpdate, MoviePartialUpdate, Movie
 
 
@@ -50,6 +52,78 @@ class MovieCreateTestCase(TestCase):
                 self.assertEqual(movie_in.description, movie.description)
                 self.assertEqual(movie_in.year_released, movie.year_released)
                 self.assertEqual(movie_in.rating, movie.rating)
+
+    def test_movie_slug_too_short(self) -> None:
+        with self.assertRaises(ValidationError) as exc_info:
+            MovieCreate(
+                slug="s",
+                title="Some title",
+                description="Some description for unit-test",
+                year_released=1901,
+                rating=1.0,
+            )
+
+        error_details = exc_info.exception.errors()[0]
+        expected_type = "string_too_short"
+        self.assertEqual(expected_type, error_details["type"])
+
+    def test_movie_title_too_short(self) -> None:
+        with self.assertRaises(ValidationError) as exc_info:
+            MovieCreate(
+                slug="some-slug",
+                title="S",
+                description="Some description for unit-test",
+                year_released=1901,
+                rating=1.0,
+            )
+
+        error_details = exc_info.exception.errors()[0]
+        expected_type = "string_too_short"
+        self.assertEqual(expected_type, error_details["type"])
+
+    def test_movie_description_too_short(self) -> None:
+        with self.assertRaises(ValidationError) as exc_info:
+            MovieCreate(
+                slug="some-slug",
+                title="Some title",
+                description="S",
+                year_released=1901,
+                rating=1.0,
+            )
+
+        error_details = exc_info.exception.errors()[0]
+        expected_type = "string_too_short"
+        self.assertEqual(expected_type, error_details["type"])
+
+    def test_movie_year_released_less_than_1901(self) -> None:
+        with self.assertRaises(ValidationError) as exc_info:
+            MovieCreate(
+                slug="some-slug",
+                title="Some title",
+                description="Some description for unit-test",
+                year_released=1899,
+                rating=1.0,
+            )
+
+        error_details = exc_info.exception.errors()[0]
+        expected_type = "greater_than_equal"
+        self.assertEqual(expected_type, error_details["type"])
+
+    def test_movie_rating_less(self) -> None:
+        with self.assertRaisesRegex(
+            ValidationError, expected_regex="Input should be greater than or equal to 0"
+        ) as exc_info:
+            MovieCreate(
+                slug="some-slug",
+                title="Some title",
+                description="Some description for unit-test",
+                year_released=1901,
+                rating=float(-1.2),
+            )
+
+        error_details = exc_info.exception.errors()[0]
+        expected_type = "greater_than_equal"
+        self.assertEqual(expected_type, error_details["type"])
 
 
 class MovieUpdateTestCase(TestCase):
