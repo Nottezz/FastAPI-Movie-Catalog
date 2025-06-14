@@ -81,14 +81,18 @@ The server will be available at `http://localhost:8000`.
    ```bash
    docker run -d -p 6380:6380 redis
    ```
+2. Set env variables: REDIS_PORT=6380;TESTING=1
 
-2. Run the test suite:
+
+3. Run the test suite:
 
    ```bash
    python -m unittest -v
    ```
-
-> Consider using `pytest` for a more flexible testing experience.
+   or with coverage
+   ```bash
+   coverage run -m unittest
+   ```
 
 ---
 
