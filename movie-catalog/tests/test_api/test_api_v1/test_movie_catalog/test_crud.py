@@ -1,15 +1,9 @@
 import string
-from os import getenv
 from typing import ClassVar
 from unittest import TestCase
 
 from api.api_v1.movie_catalog.crud import storage
 from schemas.movie_catalog import Movie, MovieCreate, MovieUpdate, MoviePartialUpdate
-
-if getenv("TESTING") != "1":
-    raise OSError(
-        "Environment is not ready for testing",
-    )
 
 
 def create_movie() -> Movie:
