@@ -55,7 +55,7 @@ This ensures formatting, linting, and other checks before each commit.
 1. Ensure you're in the working directory:
 
    ```bash
-   cd movie-catalog
+   cd movie_catalog
    ```
 
 2. Make sure Redis is running:

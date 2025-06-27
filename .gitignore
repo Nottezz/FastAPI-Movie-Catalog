@@ -172,4 +172,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-/movie-catalog/movie-catalog.json
+/movie_catalog/movie-catalog.json
