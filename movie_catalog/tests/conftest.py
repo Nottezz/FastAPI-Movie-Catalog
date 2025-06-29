@@ -20,17 +20,21 @@ def disable_logging():
     logging.getLogger().setLevel(logging.CRITICAL)
 
 
-def build_movie_create(slug: str) -> MovieCreate:
+def build_movie_create(
+    slug: str, description: str = "Some description for unit-test"
+) -> MovieCreate:
     return MovieCreate(
         slug=slug,
         title="Some title",
-        description="Some description for unit-test",
+        description=description,
         year_released=1901,
         rating=1.0,
     )
 
 
-def build_movie_create_random_slug() -> MovieCreate:
+def build_movie_create_random_slug(
+    description: str = "Some description for unit-test",
+) -> MovieCreate:
     return MovieCreate(
         slug="".join(
             random.choices(
@@ -39,18 +43,22 @@ def build_movie_create_random_slug() -> MovieCreate:
             ),
         ),
         title="Some title",
-        description="Some description for unit-test",
+        description=description,
         year_released=1901,
         rating=1.0,
     )
 
 
-def create_movie(slug: str) -> Movie:
-    return storage.create(build_movie_create(slug))
+def create_movie(
+    slug: str, description: str = "Some description for unit-test"
+) -> Movie:
+    return storage.create(build_movie_create(slug, description))
 
 
-def create_movie_random_slug() -> Movie:
-    return storage.create(build_movie_create_random_slug())
+def create_movie_random_slug(
+    description: str = "Some description for unit-test",
+) -> Movie:
+    return storage.create(build_movie_create_random_slug(description))
 
 
 @pytest.fixture()

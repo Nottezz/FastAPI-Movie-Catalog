@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 
+DESCRIPTION_MAX_LENGTH = 500
+DESCRIPTION_MIN_LENGTH = 20
+
 
 class MovieBase(BaseModel):
     title: str
@@ -28,8 +31,8 @@ class MovieCreate(MovieBase):
     description: str = Field(
         ...,
         title="Movie description",
-        min_length=20,
-        max_length=500,
+        min_length=DESCRIPTION_MIN_LENGTH,
+        max_length=DESCRIPTION_MAX_LENGTH,
     )
     year_released: int = Field(
         1900,
