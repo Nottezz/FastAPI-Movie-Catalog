@@ -1,21 +1,12 @@
+from typing import Generator
+
 import pytest
+from fastapi import status
 
 from api.api_v1.movie_catalog.crud import storage
 from main import app
-from schemas.movie_catalog import MovieCreate, Movie
-
-from fastapi import status
-
-
-def create_movie(slug: str) -> Movie:
-    movie_create = MovieCreate(
-        slug=slug,
-        title="Some title",
-        description="Some description for unit-test",
-        year_released=1901,
-        rating=1.0,
-    )
-    return storage.create(movie_create)
+from schemas.movie_catalog import Movie
+from tests.conftest import create_movie
 
 
 @pytest.fixture(
@@ -28,8 +19,10 @@ def create_movie(slug: str) -> Movie:
         ),
     ]
 )
-def movie(request) -> Movie:
-    return create_movie(slug=request.param)
+def movie(request) -> Generator[Movie, None, None]:
+    movie = create_movie(slug=request.param)
+    yield movie
+    storage.delete(movie)
 
 
 def test_delete_movie(movie, auth_client) -> None:

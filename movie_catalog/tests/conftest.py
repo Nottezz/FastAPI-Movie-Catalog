@@ -14,19 +14,47 @@ if getenv("TESTING") != "1":
         "Environment is not ready for testing",
     )
 
+
 @pytest.fixture(autouse=True)
 def disable_logging():
     logging.getLogger().setLevel(logging.CRITICAL)
 
 
-def create_movie() -> Movie:
-    movie_create = MovieCreate(slug="".join(random.choices(string.ascii_letters, k=10, ), ), title="Some title",
-                               description="Some description for unit-test", year_released=1901, rating=1.0, )
-    return storage.create(movie_create)
+def build_movie_create(slug: str) -> MovieCreate:
+    return MovieCreate(
+        slug=slug,
+        title="Some title",
+        description="Some description for unit-test",
+        year_released=1901,
+        rating=1.0,
+    )
+
+
+def build_movie_create_random_slug() -> MovieCreate:
+    return MovieCreate(
+        slug="".join(
+            random.choices(
+                string.ascii_letters,
+                k=10,
+            ),
+        ),
+        title="Some title",
+        description="Some description for unit-test",
+        year_released=1901,
+        rating=1.0,
+    )
+
+
+def create_movie(slug: str) -> Movie:
+    return storage.create(build_movie_create(slug))
+
+
+def create_movie_random_slug() -> Movie:
+    return storage.create(build_movie_create_random_slug())
 
 
 @pytest.fixture()
 def movie() -> Generator[Movie, None, None]:
-    movie = create_movie()
+    movie = create_movie_random_slug()
     yield movie
     storage.delete(movie)
