@@ -21,11 +21,13 @@ def disable_logging():
 
 
 def build_movie_create(
-    slug: str, description: str = "Some description for unit-test"
+    slug: str,
+    description: str = "Some description for unit-test",
+    title: str = "Some title",
 ) -> MovieCreate:
     return MovieCreate(
         slug=slug,
-        title="Some title",
+        title=title,
         description=description,
         year_released=1901,
         rating=1.0,
@@ -34,6 +36,7 @@ def build_movie_create(
 
 def build_movie_create_random_slug(
     description: str = "Some description for unit-test",
+    title: str = "Some title",
 ) -> MovieCreate:
     return MovieCreate(
         slug="".join(
@@ -42,7 +45,7 @@ def build_movie_create_random_slug(
                 k=10,
             ),
         ),
-        title="Some title",
+        title=title,
         description=description,
         year_released=1901,
         rating=1.0,
@@ -50,15 +53,18 @@ def build_movie_create_random_slug(
 
 
 def create_movie(
-    slug: str, description: str = "Some description for unit-test"
+    slug: str,
+    description: str = "Some description for unit-test",
+    title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create(slug, description))
+    return storage.create(build_movie_create(slug, description, title))
 
 
 def create_movie_random_slug(
     description: str = "Some description for unit-test",
+    title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create_random_slug(description))
+    return storage.create(build_movie_create_random_slug(description, title))
 
 
 @pytest.fixture()
