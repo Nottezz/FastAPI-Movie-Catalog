@@ -5,7 +5,12 @@ from fastapi import status
 
 from api.api_v1.movie_catalog.crud import storage
 from main import app
-from schemas.movie_catalog import Movie, DESCRIPTION_MIN_LENGTH, DESCRIPTION_MAX_LENGTH
+from schemas.movie_catalog import (
+    Movie,
+    DESCRIPTION_MIN_LENGTH,
+    DESCRIPTION_MAX_LENGTH,
+    MovieUpdate,
+)
 from tests.conftest import create_movie, create_movie_random_slug
 
 
@@ -66,3 +71,58 @@ class TestPartialUpdate:
         movie_from_db = storage.get_by_slug(movie.slug)
         assert movie_from_db != movie_before_update
         assert movie_from_db.description == new_description
+
+
+class TestUpdate:
+    @pytest.fixture()
+    def movie(self, request) -> Generator[Movie, None, None]:
+        description, title = request.param
+        movie = create_movie_random_slug(description=description, title=title)
+        yield movie
+        storage.delete(movie)
+
+    @pytest.mark.parametrize(
+        "movie, new_description, new_title",
+        [
+            pytest.param(
+                ("a" * DESCRIPTION_MIN_LENGTH, "abc"),
+                "a" * 50,
+                "Human Message from Space",
+                id="min-description-and-title",
+            ),
+            pytest.param(
+                ("a" * DESCRIPTION_MAX_LENGTH, "a" * 50),
+                "a" * DESCRIPTION_MIN_LENGTH,
+                "UFOs in the sky!",
+                id="max-description-and-title",
+            ),
+            pytest.param(
+                (
+                    "abc-qwe-qwerty-some-slug-abc-qwe-qwerty-some-slugg-qwe-abc",
+                    "Some Title",
+                ),
+                "a" * 50,
+                "Human Message from Space",
+                id="default-description-and-title",
+            ),
+        ],
+        indirect=["movie"],
+    )
+    def test_update_movie_details(
+        self, movie, auth_client, new_description, new_title
+    ) -> None:
+        url = app.url_path_for("update_movie", slug=movie.slug)
+        movie_before_update = storage.get_by_slug(movie.slug)
+        movie_update = MovieUpdate(
+            description=new_description,
+            title=new_title,
+            year_released=1992,
+            rating=10.0,
+        ).model_dump(mode="json")
+
+        response = auth_client.put(url, json=movie_update)
+        assert response.status_code == status.HTTP_200_OK, response.text
+        movie_from_db = storage.get_by_slug(movie.slug)
+        assert movie_from_db != movie_before_update
+        assert movie_from_db.description == new_description
+        assert movie_from_db.title == new_title
