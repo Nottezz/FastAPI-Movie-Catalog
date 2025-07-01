@@ -9,10 +9,13 @@ import pytest
 from api.api_v1.movie_catalog.crud import storage
 from schemas.movie_catalog import Movie, MovieCreate
 
-if getenv("TESTING") != "1":
-    pytest.exit(
-        "Environment is not ready for testing",
-    )
+
+@pytest.fixture(scope="session", autouse=True)
+def check_testing_env() -> None:
+    if getenv("TESTING") != "1":
+        pytest.exit(
+            "Environment is not ready for testing",
+        )
 
 
 @pytest.fixture(autouse=True)
