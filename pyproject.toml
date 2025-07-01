@@ -21,6 +21,14 @@ dev = [
     "ruff>=0.11.12",
 ]
 
+# pytest
+[tool.pytest.ini_options]
+minversion = "8.3"
+addopts = ["-ra", "--strict-markers"]
+markers = [
+    "apitest: test any api call"
+]
+
 [tool.mypy]
 plugins = [
     "pydantic.mypy",
@@ -73,7 +81,7 @@ target-version = "py312"
 select = [
     "ANN", # flake8-annotations (ANN)
     "FAST", # FastAPI (FAST)
-    "I",  # isort (I)
+    "I", # isort (I)
     "F401", # Pyflakes (F)
     "S", # flake8-bandit (S)
     "LOG", # flake8-logging (LOG)
