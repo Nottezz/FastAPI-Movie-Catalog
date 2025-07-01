@@ -10,6 +10,8 @@ from movie_catalog.main import app
 from schemas.movie_catalog import MovieCreate, Movie
 from tests.conftest import build_movie_create_random_slug
 
+pytestmark = pytest.mark.apitest
+
 
 class TestCreate:
     def test_create_movie(self, auth_client: TestClient):

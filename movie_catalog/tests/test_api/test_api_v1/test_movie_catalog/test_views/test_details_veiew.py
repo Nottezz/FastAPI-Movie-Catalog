@@ -13,6 +13,8 @@ from schemas.movie_catalog import (
 )
 from tests.conftest import create_movie, create_movie_random_slug
 
+pytestmark = pytest.mark.apitest
+
 
 class TestDelete:
     @pytest.fixture(
