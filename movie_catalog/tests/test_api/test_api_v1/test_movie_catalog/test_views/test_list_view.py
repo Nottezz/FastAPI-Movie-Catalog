@@ -1,3 +1,4 @@
+import logging
 import random
 import string
 from typing import Any
@@ -14,7 +15,10 @@ pytestmark = pytest.mark.apitest
 
 
 class TestCreate:
-    def test_create_movie(self, auth_client: TestClient):
+    def test_create_movie(self, caplog, auth_client: TestClient):
+
+        caplog.set_level(logging.DEBUG)
+
         url = app.url_path_for("add_movie")
         movie_create = MovieCreate(
             slug="".join(
@@ -33,6 +37,7 @@ class TestCreate:
         assert response.status_code == status.HTTP_201_CREATED, response.text
         received_data = MovieCreate(**response.json())
         assert received_data == movie_create, received_data
+        assert f"Add movie <{received_data.slug}> to catalog" in caplog.text
 
     def test_create_movie_already_exists(self, auth_client: TestClient, movie: Movie):
         url = app.url_path_for("add_movie")
