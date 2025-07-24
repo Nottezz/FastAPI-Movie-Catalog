@@ -5,8 +5,9 @@ from os import getenv
 from typing import Generator
 
 import pytest
-from api.api_v1.movie_catalog.crud import storage
 from schemas.movie_catalog import Movie, MovieCreate
+
+from movie_catalog.api.api_v1.movie_catalog.crud import storage
 
 
 @pytest.fixture(scope="session", autouse=True)
