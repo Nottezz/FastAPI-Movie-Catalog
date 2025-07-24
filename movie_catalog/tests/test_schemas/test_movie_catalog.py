@@ -1,8 +1,7 @@
 from unittest import TestCase
 
 from pydantic import ValidationError
-
-from schemas.movie_catalog import MovieCreate, MovieUpdate, MoviePartialUpdate, Movie
+from schemas.movie_catalog import Movie, MovieCreate, MoviePartialUpdate, MovieUpdate
 
 
 class MovieCreateTestCase(TestCase):

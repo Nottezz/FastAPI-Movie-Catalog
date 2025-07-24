@@ -3,14 +3,18 @@ from typing import ClassVar
 from unittest import TestCase
 
 from api.api_v1.movie_catalog.crud import storage
-from schemas.movie_catalog import Movie, MovieCreate, MovieUpdate, MoviePartialUpdate
+from schemas.movie_catalog import Movie, MovieCreate, MoviePartialUpdate, MovieUpdate
 
 
 def create_movie() -> Movie:
     import random
 
     movie_in = MovieCreate(
-        slug="".join(random.choices(string.ascii_letters + string.digits, k=8)),
+        slug="".join(
+            random.choices(  # noqa: S311 Standard pseudo-random generators are not suitable for cryptographic purposes
+                string.ascii_letters + string.digits, k=8
+            )
+        ),
         title="Some title",
         description="Some description for unit-test",
         year_released=1901,
@@ -77,6 +81,6 @@ class MovieCatalogStorageGetMoviesTestCase(TestCase):
                 self.assertEqual(movie, db_movie)
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         for movie in cls.movies:
             storage.delete(movie)

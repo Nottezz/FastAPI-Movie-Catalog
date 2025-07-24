@@ -1,15 +1,14 @@
 import logging
 from typing import cast
 
-from pydantic import BaseModel
-from redis import Redis
-
 from config import (
     REDIS_DB_MOVIE_CATALOG,
     REDIS_HOST,
     REDIS_MOVIE_CATALOG_HASH_NAME,
     REDIS_PORT,
 )
+from pydantic import BaseModel
+from redis import Redis
 from schemas.movie_catalog import Movie, MovieCreate, MoviePartialUpdate, MovieUpdate
 
 logger = logging.getLogger(__name__)

@@ -1,8 +1,7 @@
 __all__ = ["redis_users"]
 
-from redis import Redis
-
 from config import REDIS_DB_USERS, REDIS_HOST, REDIS_PORT
+from redis import Redis
 
 from .users_helper import AbstractUsersHelper
 

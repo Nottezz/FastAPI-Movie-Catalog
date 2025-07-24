@@ -8,7 +8,6 @@ from fastapi.security import (
     HTTPBasicCredentials,
     HTTPBearer,
 )
-
 from schemas.movie_catalog import Movie
 
 from ..auth.services import redis_tokens, redis_users
@@ -87,7 +86,9 @@ def validate_basic_auth(credentials: HTTPBasicCredentials | None) -> None:
 
 
 def user_basic_auth_required(
-    credentials: Annotated[HTTPBasicCredentials | None, Depends(user_basic_auth)] = None
+    credentials: Annotated[
+        HTTPBasicCredentials | None, Depends(user_basic_auth)
+    ] = None,
 ) -> None:
     validate_basic_auth(credentials=credentials)
 

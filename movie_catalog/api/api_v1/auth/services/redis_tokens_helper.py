@@ -1,9 +1,9 @@
 __all__ = ["redis_tokens"]
 
+from config import REDIS_DB_TOKENS, REDIS_HOST, REDIS_PORT, REDIS_TOKENS_SET_NAME
 from redis import Redis
 
 from api.api_v1.auth.services.tokens_helper import AbstractTokensHelper
-from config import REDIS_DB_TOKENS, REDIS_HOST, REDIS_PORT, REDIS_TOKENS_SET_NAME
 
 
 class RedisTokensHelper(AbstractTokensHelper):

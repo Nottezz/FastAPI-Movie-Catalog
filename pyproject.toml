@@ -88,7 +88,7 @@ select = [
     "F401", # Pyflakes (F)
     "S", # flake8-bandit (S)
     "LOG", # flake8-logging (LOG)
-    "PT", # flake8-pytest-style (PT)
+    # "PT", # flake8-pytest-style (PT)  # todo: remove after delete unittest style tests
     "RET", # flake8-return (RET)
     "ARG", # flake8-unused-arguments (ARG)
     "T20", # flake8-print (T20)
@@ -106,3 +106,4 @@ unfixable = []
 "stuff.py" = [
     "T20",
 ]
+"movie_catalog/tests/*" = ["S101"]

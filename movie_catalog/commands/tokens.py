@@ -2,10 +2,9 @@ __all__ = ("app",)
 from typing import Annotated
 
 import typer
+from api.api_v1.auth.services import redis_tokens
 from rich import print
 from rich.markdown import Markdown
-
-from api.api_v1.auth.services import redis_tokens
 
 app = typer.Typer(
     name="token",
@@ -52,7 +51,7 @@ def create_token() -> None:
 
 @app.command(name="delete")
 def delete_token(
-    token: Annotated[str, typer.Argument(help="The token to delete")]
+    token: Annotated[str, typer.Argument(help="The token to delete")],
 ) -> None:
     """
     Delete a token.

@@ -1,6 +1,5 @@
-from redis import Redis
-
 from config import REDIS_DB, REDIS_HOST, REDIS_PORT
+from redis import Redis
 
 redis = Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
 

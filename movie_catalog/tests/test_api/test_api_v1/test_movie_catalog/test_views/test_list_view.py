@@ -4,25 +4,28 @@ import string
 from typing import Any
 
 import pytest
+from _pytest.fixtures import SubRequest
 from fastapi import status
 from fastapi.testclient import TestClient
-
 from movie_catalog.main import app
-from schemas.movie_catalog import MovieCreate, Movie
+from schemas.movie_catalog import Movie, MovieCreate
+
 from tests.conftest import build_movie_create_random_slug
 
 pytestmark = pytest.mark.apitest
 
 
 class TestCreate:
-    def test_create_movie(self, caplog, auth_client: TestClient):
+    def test_create_movie(
+        self, caplog: pytest.LogCaptureFixture, auth_client: TestClient
+    ) -> None:
 
         caplog.set_level(logging.DEBUG)
 
         url = app.url_path_for("add_movie")
         movie_create = MovieCreate(
             slug="".join(
-                random.choices(
+                random.choices(  # noqa: S311  Standard pseudo-random generators are not suitable for cryptographic purposes
                     string.ascii_letters,
                     k=10,
                 ),
@@ -39,7 +42,9 @@ class TestCreate:
         assert received_data == movie_create, received_data
         assert f"Add movie <{received_data.slug}> to catalog" in caplog.text
 
-    def test_create_movie_already_exists(self, auth_client: TestClient, movie: Movie):
+    def test_create_movie_already_exists(
+        self, auth_client: TestClient, movie: Movie
+    ) -> None:
         url = app.url_path_for("add_movie")
         movie_create = MovieCreate(**movie.model_dump())
         data = movie_create.model_dump(mode="json")
@@ -63,14 +68,16 @@ class TestCreateInvalid:
             ),
         ]
     )
-    def movie_create_values(self, request) -> tuple[dict[str, Any], str]:
+    def movie_create_values(self, request: SubRequest) -> tuple[dict[str, Any], str]:
         build = build_movie_create_random_slug()
         data = build.model_dump(mode="json")
         slug, err_type = request.param
         data["slug"] = slug
         return data, err_type
 
-    def test_invalid_slug(self, auth_client, movie_create_values):
+    def test_invalid_slug(
+        self, auth_client: TestClient, movie_create_values: tuple[dict[str, Any], str]
+    ) -> None:
         url = app.url_path_for("add_movie")
         created_data, expected_error_type = movie_create_values
         response = auth_client.post(url, json=created_data)

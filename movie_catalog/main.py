@@ -1,11 +1,10 @@
 import logging
 
-from fastapi import FastAPI
-
 import config
-from api.main_view import router as main_router
 from api import router as api_router
+from api.main_view import router as main_router
 from app_lifespan import lifespan
+from fastapi import FastAPI
 
 logging.basicConfig(
     format=config.LOG_FORMAT,
