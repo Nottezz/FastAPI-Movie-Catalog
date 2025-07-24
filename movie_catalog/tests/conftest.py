@@ -6,8 +6,8 @@ from typing import Generator
 
 import pytest
 
-from api.api_v1.movie_catalog.crud import storage
-from schemas.movie_catalog import Movie, MovieCreate
+from movie_catalog.api.api_v1.movie_catalog.crud import storage
+from movie_catalog.schemas.movie_catalog import Movie, MovieCreate
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -19,7 +19,7 @@ def check_testing_env() -> None:
 
 
 @pytest.fixture(autouse=True)
-def disable_logging():
+def disable_logging() -> None:
     logging.getLogger().setLevel(logging.CRITICAL)
 
 
@@ -43,7 +43,7 @@ def build_movie_create_random_slug(
 ) -> MovieCreate:
     return MovieCreate(
         slug="".join(
-            random.choices(
+            random.choices(  # noqa:  S311 Standard pseudo-random generators are not suitable for cryptographic purposes
                 string.ascii_letters,
                 k=10,
             ),

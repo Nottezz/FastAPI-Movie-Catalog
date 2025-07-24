@@ -3,7 +3,7 @@ from collections.abc import Generator
 import pytest
 from fastapi.testclient import TestClient
 
-from api.api_v1.auth.services import redis_tokens
+from movie_catalog.api.api_v1.auth.services import redis_tokens
 from movie_catalog.main import app
 
 
@@ -25,5 +25,3 @@ def auth_client(auth_token: str) -> Generator[TestClient]:
     headers = {"Authorization": f"Bearer {auth_token}"}
     with TestClient(app, headers=headers) as client:
         yield client
-
-
