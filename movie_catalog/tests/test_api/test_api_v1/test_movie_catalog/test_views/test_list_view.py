@@ -7,10 +7,10 @@ import pytest
 from _pytest.fixtures import SubRequest
 from fastapi import status
 from fastapi.testclient import TestClient
-from schemas.movie_catalog import Movie, MovieCreate
-from tests.conftest import build_movie_create_random_slug
 
 from movie_catalog.main import app
+from movie_catalog.schemas.movie_catalog import Movie, MovieCreate
+from movie_catalog.tests.conftest import build_movie_create_random_slug
 
 pytestmark = pytest.mark.apitest
 

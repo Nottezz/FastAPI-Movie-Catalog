@@ -2,8 +2,13 @@ import string
 from typing import ClassVar
 from unittest import TestCase
 
-from api.api_v1.movie_catalog.crud import storage
-from schemas.movie_catalog import Movie, MovieCreate, MoviePartialUpdate, MovieUpdate
+from movie_catalog.api.api_v1.movie_catalog.crud import storage
+from movie_catalog.schemas.movie_catalog import (
+    Movie,
+    MovieCreate,
+    MoviePartialUpdate,
+    MovieUpdate,
+)
 
 
 def create_movie() -> Movie:

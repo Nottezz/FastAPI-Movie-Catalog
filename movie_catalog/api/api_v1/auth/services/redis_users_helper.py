@@ -1,7 +1,8 @@
 __all__ = ["redis_users"]
 
-from config import REDIS_DB_USERS, REDIS_HOST, REDIS_PORT
 from redis import Redis
+
+from movie_catalog.config import REDIS_DB_USERS, REDIS_HOST, REDIS_PORT
 
 from .users_helper import AbstractUsersHelper
 

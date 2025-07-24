@@ -2,17 +2,18 @@ from typing import Generator
 
 import pytest
 from _pytest.fixtures import SubRequest
-from api.api_v1.movie_catalog.crud import storage
 from fastapi import status
 from fastapi.testclient import TestClient
-from main import app
-from schemas.movie_catalog import (
+
+from movie_catalog.api.api_v1.movie_catalog.crud import storage
+from movie_catalog.main import app
+from movie_catalog.schemas.movie_catalog import (
     DESCRIPTION_MAX_LENGTH,
     DESCRIPTION_MIN_LENGTH,
     Movie,
     MovieUpdate,
 )
-from tests.conftest import create_movie, create_movie_random_slug
+from movie_catalog.tests.conftest import create_movie, create_movie_random_slug
 
 pytestmark = pytest.mark.apitest
 
