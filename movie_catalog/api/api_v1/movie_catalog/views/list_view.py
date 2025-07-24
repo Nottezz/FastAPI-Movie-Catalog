@@ -1,5 +1,4 @@
 __all__ = ("router",)
-from typing import cast
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -23,7 +22,7 @@ router: APIRouter = APIRouter(
     response_model=list[MovieRead],
 )
 def get_movie_list() -> list[Movie]:
-    return cast(list[Movie], storage.get())
+    return storage.get()
 
 
 @router.post(

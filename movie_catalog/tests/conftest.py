@@ -60,14 +60,14 @@ def create_movie(
     description: str = "Some description for unit-test",
     title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create(slug, description, title))  # type: ignore
+    return storage.create(build_movie_create(slug, description, title))
 
 
 def create_movie_random_slug(
     description: str = "Some description for unit-test",
     title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create_random_slug(description, title))  # type: ignore
+    return storage.create(build_movie_create_random_slug(description, title))
 
 
 @pytest.fixture()
