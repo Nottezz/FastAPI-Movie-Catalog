@@ -2,6 +2,13 @@
 
 A FastAPI-based application for managing and browsing a movie catalog. Designed with scalability and developer experience in mind.
 
+[![Python checks 🐍](https://github.com/Nottezz/FastAPI-Movie-Catalog/actions/workflows/python-check.yml/badge.svg)](https://github.com/Nottezz/FastAPI-Movie-Catalog/actions/workflows/python-check.yml)
+[![FastAPI](https://img.shields.io/badge/framework-FastAPI-green)](https://fastapi.tiangolo.com/)
+[![Python version](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
+[![mypy: strict](https://img.shields.io/badge/mypy-strict-blueviolet)](http://mypy-lang.org/)
+[![code style: ruff](https://img.shields.io/badge/code%20style-ruff-blue)](https://docs.astral.sh/ruff/)
+[![uv: managed](https://img.shields.io/badge/dependencies-managed%20with%20uv-yellowgreen)](https://github.com/astral-sh/uv)
+
 ---
 
 ## 🚀 Features
