@@ -3,6 +3,7 @@ from collections.abc import Generator
 import pytest
 from api.api_v1.auth.services import redis_tokens
 from fastapi.testclient import TestClient
+
 from movie_catalog.main import app
 
 

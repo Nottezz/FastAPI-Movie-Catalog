@@ -12,7 +12,6 @@ from schemas.movie_catalog import (
     Movie,
     MovieUpdate,
 )
-
 from tests.conftest import create_movie, create_movie_random_slug
 
 pytestmark = pytest.mark.apitest
