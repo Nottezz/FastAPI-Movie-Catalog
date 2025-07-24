@@ -63,14 +63,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
 
       - name: Run python tests
-        run: uv run pytest movie_catalog --cov=movie_catalog --cov-report=xml:coverage.yaml
+        run: uv run pytest
         env:
           TESTING: 1
           REDIS_PORT: 6379
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
-          fail_ci_if_error: 'true'
