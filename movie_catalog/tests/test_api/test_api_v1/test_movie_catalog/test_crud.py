@@ -3,7 +3,6 @@ from typing import ClassVar
 from unittest import TestCase
 
 import pytest
-from tests.conftest import build_movie_create_random_slug
 
 from movie_catalog.api.api_v1.movie_catalog.crud import (
     MovieCatalogAlreadyExists,
@@ -15,6 +14,7 @@ from movie_catalog.schemas.movie_catalog import (
     MoviePartialUpdate,
     MovieUpdate,
 )
+from movie_catalog.tests.conftest import build_movie_create_random_slug
 
 
 def create_movie() -> Movie:
