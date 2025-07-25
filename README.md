@@ -8,6 +8,7 @@ A FastAPI-based application for managing and browsing a movie catalog. Designed 
 [![mypy: strict](https://img.shields.io/badge/mypy-strict-blueviolet)](http://mypy-lang.org/)
 [![code style: ruff](https://img.shields.io/badge/code%20style-ruff-blue)](https://docs.astral.sh/ruff/)
 [![uv: managed](https://img.shields.io/badge/dependencies-managed%20with%20uv-yellowgreen)](https://github.com/astral-sh/uv)
+[![codecov](https://codecov.io/github/Nottezz/FastAPI-Movie-Catalog/graph/badge.svg?token=YUY2IAM1OC)](https://codecov.io/github/Nottezz/FastAPI-Movie-Catalog)
 
 ---
 
