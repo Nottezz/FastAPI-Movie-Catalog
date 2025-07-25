@@ -2,7 +2,13 @@ import string
 from typing import ClassVar
 from unittest import TestCase
 
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
+import pytest
+from tests.conftest import build_movie_create_random_slug
+
+from movie_catalog.api.api_v1.movie_catalog.crud import (
+    MovieCatalogAlreadyExists,
+    storage,
+)
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,
@@ -89,3 +95,20 @@ class MovieCatalogStorageGetMoviesTestCase(TestCase):
     def tearDownClass(cls) -> None:
         for movie in cls.movies:
             storage.delete(movie)
+
+
+def test_create_or_raise_if_exists(movie: Movie) -> None:
+    movie_create = MovieCreate(**movie.model_dump())
+    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+        storage.create_or_rise_if_exists(movie_create)
+
+    assert exc_info.value.args[0] == movie_create.slug
+
+
+def test_create_twice() -> None:
+    movie_create = build_movie_create_random_slug()
+    storage.create_or_rise_if_exists(movie_create)
+    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+        storage.create_or_rise_if_exists(movie_create)
+
+    assert exc_info.value.args == (movie_create.slug,)
