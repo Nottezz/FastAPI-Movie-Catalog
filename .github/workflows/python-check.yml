@@ -68,6 +68,16 @@ jobs:
           TESTING: 1
           REDIS_PORT: 6379
 
+  upload-report-to-codcov:
+    runs-on: ubuntu-latest
+    needs:
+      - run-tests
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-reports
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
