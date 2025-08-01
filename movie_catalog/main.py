@@ -2,15 +2,15 @@ import logging
 
 from fastapi import FastAPI
 
-from movie_catalog import config
 from movie_catalog.api import router as api_router
 from movie_catalog.api.main_view import router as main_router
 from movie_catalog.app_lifespan import lifespan
+from movie_catalog.config import settings
 
 logging.basicConfig(
-    format=config.LOG_FORMAT,
-    level=config.LOG_LEVEL,
-    datefmt=config.LOG_DATE_FORMAT,
+    format=settings.logging.log_format,
+    level=settings.logging.log_level,
+    datefmt=settings.logging.log_date_format,
 )
 
 app = FastAPI(

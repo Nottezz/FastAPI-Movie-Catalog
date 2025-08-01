@@ -1,14 +1,9 @@
 __all__ = ["redis_tokens"]
 
+from config import settings
 from redis import Redis
 
 from movie_catalog.api.api_v1.auth.services.tokens_helper import AbstractTokensHelper
-from movie_catalog.config import (
-    REDIS_DB_TOKENS,
-    REDIS_HOST,
-    REDIS_PORT,
-    REDIS_TOKENS_SET_NAME,
-)
 
 
 class RedisTokensHelper(AbstractTokensHelper):
@@ -31,8 +26,8 @@ class RedisTokensHelper(AbstractTokensHelper):
 
 
 redis_tokens = RedisTokensHelper(
-    host=REDIS_HOST,
-    port=REDIS_PORT,
-    db=REDIS_DB_TOKENS,
-    tokens_set_name=REDIS_TOKENS_SET_NAME,
+    host=settings.redis.connection.host,
+    port=settings.redis.connection.port,
+    db=settings.redis.db.tokens,
+    tokens_set_name=settings.redis.collections.tokens_set,
 )
