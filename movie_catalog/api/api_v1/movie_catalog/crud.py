@@ -1,10 +1,11 @@
 import logging
 from typing import cast
 
-from config import settings
 from pydantic import BaseModel
 from redis import Redis
-from schemas.movie_catalog import (
+
+from movie_catalog.config import settings
+from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,
     MoviePartialUpdate,

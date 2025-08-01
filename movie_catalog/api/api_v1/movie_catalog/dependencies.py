@@ -8,7 +8,8 @@ from fastapi.security import (
     HTTPBasicCredentials,
     HTTPBearer,
 )
-from schemas.movie_catalog import Movie
+
+from movie_catalog.schemas.movie_catalog import Movie
 
 from ..auth.services import redis_tokens, redis_users
 from .crud import storage
