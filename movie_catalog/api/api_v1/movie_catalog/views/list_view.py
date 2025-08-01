@@ -21,7 +21,7 @@ router: APIRouter = APIRouter(
     response_model=list[MovieRead],
 )
 def get_movie_list() -> list[Movie]:
-    return storage.get()
+    return storage.get()  # type: ignore
 
 
 @router.post(
