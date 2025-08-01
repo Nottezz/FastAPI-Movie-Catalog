@@ -1,18 +1,46 @@
 import logging
-from os import getenv
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-STORAGE_PATH = BASE_DIR / "movie_catalog.json"
-LOG_FORMAT = "[-] %(asctime)s [%(levelname)s] %(module)s-%(lineno)d - %(message)s"
-LOG_LEVEL = logging.DEBUG
-LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings
 
-REDIS_HOST = getenv("REDIS_HOST", "localhost")
-REDIS_PORT = int(getenv("REDIS_PORT", 0)) or 6379
-REDIS_DB = 0
-REDIS_DB_TOKENS = 1
-REDIS_DB_USERS = 2
-REDIS_DB_MOVIE_CATALOG = 3
-REDIS_TOKENS_SET_NAME = "tokens"
-REDIS_MOVIE_CATALOG_HASH_NAME = "movie_catalog"
+BASE_DIR = Path(__file__).resolve().parent
+
+
+class LoggingConfig(BaseModel):
+    log_format: str = (
+        "[-] %(asctime)s [%(levelname)s] %(module)s-%(lineno)d - %(message)s"
+    )
+    log_level: int = logging.DEBUG
+    log_date_format: str = "%Y-%m-%d %H:%M:%S"
+
+
+class RedisConnectionConfig(BaseModel):
+    host: str = "localhost"
+    port: int = 6379
+
+
+class RedisDatabaseConfig(BaseModel):
+    default: int = 0
+    tokens: int = 1
+    users: int = 2
+    movie_catalog: int = 3
+
+
+class RedisCollectionsNamesConfig(BaseModel):
+    tokens_set: str = "tokens"
+    movie_catalog_hash: str = "movie_catalog"
+
+
+class RedisConfig(BaseModel):
+    connection: RedisConnectionConfig = RedisConnectionConfig()
+    db: RedisDatabaseConfig = RedisDatabaseConfig()
+    collections: RedisCollectionsNamesConfig = RedisCollectionsNamesConfig()
+
+
+class Settings(BaseSettings):
+    logging: LoggingConfig = LoggingConfig()
+    redis: RedisConfig = RedisConfig()
+
+
+settings = Settings()
