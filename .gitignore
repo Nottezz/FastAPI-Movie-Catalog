@@ -173,3 +173,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 /movie_catalog/movie-catalog.json
+config.local.yaml
