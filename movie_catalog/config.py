@@ -53,7 +53,10 @@ class RedisConfig(BaseModel):
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         case_sensitive=False,
-        env_file=BASE_DIR / ".env",
+        env_file=(
+            BASE_DIR / ".env.template",
+            BASE_DIR / ".env",
+        ),
         env_prefix="MOVIE_CATALOG__",
         env_nested_delimiter="__",
     )
