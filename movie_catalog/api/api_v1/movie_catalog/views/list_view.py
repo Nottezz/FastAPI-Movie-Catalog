@@ -1,15 +1,14 @@
 __all__ = ("router",)
 
-from fastapi import APIRouter, Depends, HTTPException, status
-
-from movie_catalog.api.api_v1.movie_catalog.crud import (
+from api.api_v1.movie_catalog.crud import (
     MovieCatalogAlreadyExists,
     storage,
 )
-from movie_catalog.api.api_v1.movie_catalog.dependencies import (
+from api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
 )
-from movie_catalog.schemas.movie_catalog import Movie, MovieCreate, MovieRead
+from fastapi import APIRouter, Depends, HTTPException, status
+from schemas.movie_catalog import Movie, MovieCreate, MovieRead
 
 router: APIRouter = APIRouter(
     prefix="/movies",

@@ -1,13 +1,12 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, status
-
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
-from movie_catalog.api.api_v1.movie_catalog.dependencies import (
+from api.api_v1.movie_catalog.crud import storage
+from api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
     prefetch_film,
 )
-from movie_catalog.schemas.movie_catalog import (
+from fastapi import APIRouter, Depends, status
+from schemas.movie_catalog import (
     Movie,
     MoviePartialUpdate,
     MovieRead,

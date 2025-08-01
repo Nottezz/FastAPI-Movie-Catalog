@@ -1,9 +1,8 @@
 __all__ = ["redis_tokens"]
 
+from api.api_v1.auth.services.tokens_helper import AbstractTokensHelper
 from config import settings
 from redis import Redis
-
-from movie_catalog.api.api_v1.auth.services.tokens_helper import AbstractTokensHelper
 
 
 class RedisTokensHelper(AbstractTokensHelper):

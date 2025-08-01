@@ -4,8 +4,7 @@ from typing import cast
 from config import settings
 from pydantic import BaseModel
 from redis import Redis
-
-from movie_catalog.schemas.movie_catalog import (
+from schemas.movie_catalog import (
     Movie,
     MovieCreate,
     MoviePartialUpdate,
