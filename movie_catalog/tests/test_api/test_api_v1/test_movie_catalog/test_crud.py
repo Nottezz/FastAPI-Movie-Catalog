@@ -31,7 +31,7 @@ def create_movie() -> Movie:
         year_released=1901,
         rating=1.0,
     )
-    return storage.create(movie_in)  # type: ignore
+    return storage.create(movie_in)
 
 
 class MovieCatalogStorageTestCase(TestCase):

@@ -6,7 +6,7 @@ from movie_catalog.api.api_v1.auth.services.tokens_helper import AbstractTokensH
 from movie_catalog.config import settings
 
 
-class RedisTokensHelper(AbstractTokensHelper):  # type: ignore
+class RedisTokensHelper(AbstractTokensHelper):
 
     def __init__(self, host: str, port: int, db: int, tokens_set_name: str) -> None:
         self.redis = Redis(host=host, port=port, db=db, decode_responses=True)
