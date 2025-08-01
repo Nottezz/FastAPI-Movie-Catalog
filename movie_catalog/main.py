@@ -10,6 +10,7 @@ from movie_catalog.app_lifespan import lifespan
 logging.basicConfig(
     format=config.LOG_FORMAT,
     level=config.LOG_LEVEL,
+    datefmt=config.LOG_DATE_FORMAT,
 )
 
 app = FastAPI(

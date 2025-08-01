@@ -6,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent
 STORAGE_PATH = BASE_DIR / "movie_catalog.json"
 LOG_FORMAT = "[-] %(asctime)s [%(levelname)s] %(module)s-%(lineno)d - %(message)s"
 LOG_LEVEL = logging.DEBUG
+LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 REDIS_HOST = getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(getenv("REDIS_PORT", 0)) or 6379
