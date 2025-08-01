@@ -12,7 +12,7 @@ class LoggingConfig(BaseModel):
     log_format: str = (
         "[-] %(asctime)s [%(levelname)s] %(module)s-%(lineno)d - %(message)s"
     )
-    log_level_name: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+    log_level_name: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "WARNING"
     log_date_format: str = "%Y-%m-%d %H:%M:%S"
 
     @property
@@ -51,7 +51,12 @@ class RedisConfig(BaseModel):
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(cli_parse_args=True, case_sensitive=False)
+    model_config = SettingsConfigDict(
+        case_sensitive=False,
+        env_file=BASE_DIR / ".env",
+        env_prefix="MOVIE_CATALOG__",
+        env_nested_delimiter="__",
+    )
 
     logging: LoggingConfig = LoggingConfig()
     redis: RedisConfig = RedisConfig()
