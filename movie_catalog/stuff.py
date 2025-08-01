@@ -1,7 +1,12 @@
-from config import REDIS_DB, REDIS_HOST, REDIS_PORT
+from config import settings
 from redis import Redis
 
-redis = Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
+redis = Redis(
+    host=settings.redis.connection.host,
+    port=settings.redis.connection.port,
+    db=settings.redis.db.default,
+    decode_responses=True,
+)
 
 
 def main() -> None:

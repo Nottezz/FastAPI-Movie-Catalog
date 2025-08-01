@@ -1,0 +1,3 @@
+movie-catalog:
+  logging:
+    log_level_name: INFO

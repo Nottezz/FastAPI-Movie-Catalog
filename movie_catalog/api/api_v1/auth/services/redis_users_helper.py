@@ -2,7 +2,7 @@ __all__ = ["redis_users"]
 
 from redis import Redis
 
-from movie_catalog.config import REDIS_DB_USERS, REDIS_HOST, REDIS_PORT
+from movie_catalog.config import settings
 
 from .users_helper import AbstractUsersHelper
 
@@ -15,4 +15,8 @@ class RedisUsersHelper(AbstractUsersHelper):
         return self.redis.get(username)
 
 
-redis_users = RedisUsersHelper(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB_USERS)
+redis_users = RedisUsersHelper(
+    host=settings.redis.connection.host,
+    port=settings.redis.connection.port,
+    db=settings.redis.db.users,
+)
