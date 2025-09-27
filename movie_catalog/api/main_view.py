@@ -10,3 +10,10 @@ def home_page(
     request: Request,
 ) -> HTMLResponse:
     return templates.TemplateResponse(request=request, name="home.html")
+
+
+@router.get("/about", include_in_schema=False, name="about")
+def about_page(
+    request: Request,
+) -> HTMLResponse:
+    return templates.TemplateResponse(request=request, name="about.html")

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+  About - {{ super() }}
+{% endblock %}
+
+{% block main %}
+  <div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="h4 mb-3">About the Project</h2>
+        <p>
+          <strong>FastAPI Movie Catalog</strong> is a learning project built to demonstrate the
+          capabilities of the <strong>FastAPI</strong> framework. It allows you to manage a movie collection:
+          add new titles, store ratings, and organize your own catalog.
+        </p>
+        <p>
+          The project includes both a <em>backend API</em> powered by FastAPI and a web interface based on
+          Jinja2 templates and Bootstrap 5. This makes the service convenient for developers, who can interact
+          with the API directly, as well as for end users who prefer a simple web UI.
+        </p>
+        <p>
+          The main focus of the project is to provide a clear and extendable architecture:
+          developers can use it as a foundation to build more complex applications,
+          experiment with REST APIs, or integrate additional features such as authentication,
+          search, and recommendations.
+        </p>
+
+        <!-- Features List -->
+        <h3 class="h5 mt-4">Key Features</h3>
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item">🎬 CRUD operations for movies (create, read, update, delete)</li>
+          <li class="list-group-item">⭐ User-friendly movie rating system</li>
+          <li class="list-group-item">📑 Automatic API documentation via Swagger and ReDoc</li>
+          <li class="list-group-item">🖥️ Responsive Bootstrap 5 interface</li>
+          <li class="list-group-item">⚡ High performance thanks to FastAPI’s async architecture</li>
+          <li class="list-group-item">🛠️ Easy to extend with new modules (e.g., authentication, search,
+            recommendations)
+          </li>
+        </ul>
+
+        <p>
+          With its clean codebase and modern stack, <strong>FastAPI Movie Catalog</strong> is
+          both a practical tool and a great entry point for those who want to learn how to
+          design, document, and deploy APIs in Python.
+        </p>
+
+        <h2 class="mt-5">Social</h2>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a href="mailto:driftworks2013@yandex.ru" class="text-decoration-none text-dark">
+              <i class="bi bi-envelope me-2"></i> driftworks2013@yandex.ru
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="https://t.me/Nottezz" target="_blank" class="text-decoration-none text-dark">
+              <i class="bi bi-telegram me-2 text-primary"></i> @Nottezz
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="https://github.com/Nottezz" target="_blank" class="text-decoration-none text-dark">
+              <i class="bi bi-github me-2"></i> github.com/Nottezz
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
