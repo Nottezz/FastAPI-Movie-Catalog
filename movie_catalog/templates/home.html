@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Home - {{ super() }}
+{% endblock %}
+
+{% block main %}
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-4 fw-bold">🎬 Great Movies Catalog</h1>
+      <p class="lead text-muted">
+        Сервис для хранения и оценки фильмов. Построен на основе <strong>FastAPI</strong> с поддержкой OpenAPI.
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="/docs" class="btn btn-primary">Swagger Docs</a>
+        <a href="https://github.com/Nottezz/FastAPI-Movie-Catalog" target="_blank" class="btn btn-dark">
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="row text-center mb-5">
+      <div class="col-md-4">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <h3 class="h5">🚀 Быстрый API</h3>
+          <p>Высокая скорость работы и автоматическая генерация документации OpenAPI.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <h3 class="h5">⭐ Оценки фильмов</h3>
+          <p>Возможность ставить оценки и формировать каталог лучших фильмов.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <h3 class="h5">🛠️ Простая интеграция</h3>
+          <p>Чистый и понятный код, который легко расширять и дорабатывать.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

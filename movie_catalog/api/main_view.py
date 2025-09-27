@@ -1,14 +1,12 @@
 from fastapi import APIRouter, Request
+from fastapi.responses import HTMLResponse
+from templating.jinja_templates import templates
 
 router = APIRouter()
 
 
-@router.get("/")
-def root(
+@router.get("/", include_in_schema=False, name="home")
+def home_page(
     request: Request,
-) -> dict[str, str]:
-    docs_url = request.url.replace(path="/docs")
-    return {
-        "message": "Hello World",
-        "docs_url": str(docs_url),
-    }
+) -> HTMLResponse:
+    return templates.TemplateResponse(request=request, name="home.html")
