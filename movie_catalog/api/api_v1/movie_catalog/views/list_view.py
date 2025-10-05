@@ -1,8 +1,8 @@
 __all__ = ("router",)
 
+from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Depends, HTTPException, status
 from storage.movie_catalog.crud import (
-    MovieCatalogAlreadyExists,
     storage,
 )
 
@@ -70,7 +70,7 @@ def add_movie(
 ) -> Movie:
     try:
         return storage.create_or_rise_if_exists(movie_create)
-    except MovieCatalogAlreadyExists:
+    except MovieAlreadyExists:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"Movie with slug <{movie_create.slug}> already exists.",

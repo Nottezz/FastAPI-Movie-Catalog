@@ -1,6 +1,7 @@
 import logging
 from typing import cast
 
+from exceptions import MovieAlreadyExists
 from pydantic import BaseModel
 from redis import Redis
 
@@ -20,14 +21,6 @@ redis = Redis(
     db=settings.redis.db.movie_catalog,
     decode_responses=True,
 )
-
-
-class MovieCatalogBaseError(Exception):
-    pass
-
-
-class MovieCatalogAlreadyExists(MovieCatalogBaseError):
-    pass
 
 
 class MovieCatalogStorage(BaseModel):
@@ -68,7 +61,7 @@ class MovieCatalogStorage(BaseModel):
             return self.create(create_movie)
 
         logger.error("Movie with slug <%s> already exists.", create_movie.slug)
-        raise MovieCatalogAlreadyExists(create_movie.slug)
+        raise MovieAlreadyExists(create_movie.slug)
 
     def delete_by_slug(self, slug: str) -> None:
         redis.hdel(self.hast_name, slug)

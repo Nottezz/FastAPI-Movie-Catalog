@@ -3,8 +3,8 @@ from typing import ClassVar
 from unittest import TestCase
 
 import pytest
+from exceptions import MovieAlreadyExists
 from storage.movie_catalog.crud import (
-    MovieCatalogAlreadyExists,
     storage,
 )
 
@@ -99,7 +99,7 @@ class MovieCatalogStorageGetMoviesTestCase(TestCase):
 
 def test_create_or_raise_if_exists(movie: Movie) -> None:
     movie_create = MovieCreate(**movie.model_dump())
-    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+    with pytest.raises(MovieAlreadyExists, match=movie_create.slug) as exc_info:
         storage.create_or_rise_if_exists(movie_create)
 
     assert exc_info.value.args[0] == movie_create.slug
@@ -108,7 +108,7 @@ def test_create_or_raise_if_exists(movie: Movie) -> None:
 def test_create_twice() -> None:
     movie_create = build_movie_create_random_slug()
     storage.create_or_rise_if_exists(movie_create)
-    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+    with pytest.raises(MovieAlreadyExists, match=movie_create.slug) as exc_info:
         storage.create_or_rise_if_exists(movie_create)
 
     assert exc_info.value.args == (movie_create.slug,)
