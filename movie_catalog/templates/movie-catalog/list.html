@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}
+  Movies Rating
+{% endblock %}
+
+{% block main %}
+  <div class="container py-5">
+    <h1 class="mb-4 fw-bold text-center">🎬 Movies Rating</h1>
+
+    {% if movie_catalog %}
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped align-middle mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col" style="width: 25%;">Title</th>
+                  <th scope="col" style="width: 45%;">Description</th>
+                  <th scope="col" style="width: 15%;">Year</th>
+                  <th scope="col" style="width: 15%;">Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for movie in movie_catalog %}
+                <tr>
+                  <td class="fw-semibold">
+                    <i class="bi bi-film me-2 text-primary"></i>{{ movie.title }}
+                  </td>
+                  <td class="text-muted">
+                    {{ movie.description[:100] ~ ('...' if movie.description|length > 100) }}
+                  </td>
+                  <td>
+                    <span class="badge bg-secondary">{{ movie.year_released }}</span>
+                  </td>
+                  <td>
+                    {% if movie.rating >= 8 %}
+                      <span class="badge bg-success">{{ movie.rating }}</span>
+                    {% elif movie.rating >= 5 %}
+                      <span class="badge bg-warning text-dark">{{ movie.rating }}</span>
+                    {% else %}
+                      <span class="badge bg-danger">{{ movie.rating }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-warning mt-5 text-center fw-bold" role="alert">
+        There are no films in the catalog 😥
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
