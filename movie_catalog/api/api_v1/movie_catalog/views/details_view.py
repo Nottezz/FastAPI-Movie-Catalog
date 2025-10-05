@@ -1,8 +1,8 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
+from storage.movie_catalog.crud import storage
 
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
 from movie_catalog.api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
     prefetch_film,

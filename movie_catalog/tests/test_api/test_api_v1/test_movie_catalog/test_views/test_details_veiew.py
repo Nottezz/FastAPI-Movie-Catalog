@@ -4,8 +4,8 @@ import pytest
 from _pytest.fixtures import SubRequest
 from fastapi import status
 from fastapi.testclient import TestClient
+from storage.movie_catalog.crud import storage
 
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
 from movie_catalog.main import app
 from movie_catalog.schemas.movie_catalog import (
     DESCRIPTION_MAX_LENGTH,

@@ -5,8 +5,8 @@ from os import getenv
 from typing import Generator
 
 import pytest
+from storage.movie_catalog.crud import storage
 
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
 from movie_catalog.schemas.movie_catalog import Movie, MovieCreate
 
 

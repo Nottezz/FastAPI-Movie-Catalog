@@ -3,11 +3,11 @@ from typing import ClassVar
 from unittest import TestCase
 
 import pytest
-
-from movie_catalog.api.api_v1.movie_catalog.crud import (
+from storage.movie_catalog.crud import (
     MovieCatalogAlreadyExists,
     storage,
 )
+
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,

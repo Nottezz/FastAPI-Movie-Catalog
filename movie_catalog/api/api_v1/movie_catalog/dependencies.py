@@ -8,11 +8,11 @@ from fastapi.security import (
     HTTPBasicCredentials,
     HTTPBearer,
 )
+from storage.movie_catalog.crud import storage
 
 from movie_catalog.schemas.movie_catalog import Movie
 
 from ..auth.services import redis_tokens, redis_users
-from .crud import storage
 
 logger = logging.getLogger(__name__)
 
