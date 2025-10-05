@@ -5,40 +5,66 @@
 
 {% block main %}
   <div class="container py-5">
-    <h1 class="mb-4 fw-bold text-center">🎬 Movies Rating</h1>
+    <h1 class="mb-4 fw-bold text-center">
+      <i class="bi bi-camera-reels text-primary me-2"></i>Movies Rating
+    </h1>
 
     {% if movie_catalog %}
       <div class="card shadow-sm border-0">
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped align-middle mb-0">
-              <thead class="table-dark">
+              <thead class="table-dark text-center">
                 <tr>
-                  <th scope="col" style="width: 25%;">Title</th>
-                  <th scope="col" style="width: 45%;">Description</th>
-                  <th scope="col" style="width: 15%;">Year</th>
-                  <th scope="col" style="width: 15%;">Rating</th>
+                  <th scope="col" style="width: 20%;">Title</th>
+                  <th scope="col" style="width: 40%;">Description</th>
+                  <th scope="col" style="width: 10%;">Year</th>
+                  <th scope="col" style="width: 10%;">Rating</th>
+                  <th scope="col" style="width: 20%;">Original Link</th>
                 </tr>
               </thead>
               <tbody>
               {% for movie in movie_catalog %}
                 <tr>
-                  <td class="fw-semibold">
-                    <i class="bi bi-film me-2 text-primary"></i>{{ movie.title }}
+                  <!-- Title -->
+                  <td class="fw-semibold text-start">
+                    <i class="bi bi-film text-primary me-2"></i>{{ movie.title }}
                   </td>
+
+                  <!-- Description -->
                   <td class="text-muted">
                     {{ movie.description[:100] ~ ('...' if movie.description|length > 100) }}
                   </td>
-                  <td>
+
+                  <!-- Year -->
+                  <td class="text-center">
                     <span class="badge bg-secondary">{{ movie.year_released }}</span>
                   </td>
-                  <td>
+
+                  <!-- Rating -->
+                  <td class="text-center">
                     {% if movie.rating >= 8 %}
                       <span class="badge bg-success">{{ movie.rating }}</span>
                     {% elif movie.rating >= 5 %}
                       <span class="badge bg-warning text-dark">{{ movie.rating }}</span>
                     {% else %}
                       <span class="badge bg-danger">{{ movie.rating }}</span>
+                    {% endif %}
+                  </td>
+
+                  <!-- Link -->
+                  <td class="text-center">
+                    {% if movie.original_link %}
+                      <a
+                        href="{{ movie.original_link }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="badge bg-secondary text-decoration-none d-inline-flex align-items-center"
+                      >
+                        <i class="bi bi-box-arrow-up-right me-1"></i>Open
+                      </a>
+                    {% else %}
+                      <span class="badge bg-secondary">N/A</span>
                     {% endif %}
                   </td>
                 </tr>

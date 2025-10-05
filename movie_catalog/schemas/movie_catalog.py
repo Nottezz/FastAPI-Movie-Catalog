@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import AnyHttpUrl, BaseModel, Field
 
 DESCRIPTION_MAX_LENGTH = 500
 DESCRIPTION_MIN_LENGTH = 20
@@ -9,6 +9,7 @@ class MovieBase(BaseModel):
     description: str
     year_released: int
     rating: float
+    original_link: AnyHttpUrl
 
 
 class MovieCreate(MovieBase):
@@ -46,6 +47,7 @@ class MovieCreate(MovieBase):
         le=10.0,
         title="Movie rating",
     )
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieUpdate(MovieBase):
@@ -108,6 +110,7 @@ class MoviePartialUpdate(BaseModel):
         le=10.0,
         title="Movie rating",
     )
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieRead(MovieBase):
