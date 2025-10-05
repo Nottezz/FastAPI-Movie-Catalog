@@ -256,6 +256,7 @@ dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "pydantic-settings", extra = ["yaml"] },
     { name = "redis", extra = ["hiredis"] },
+    { name = "ruff" },
     { name = "typer" },
     { name = "types-redis" },
 ]
@@ -275,6 +276,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.12" },
     { name = "pydantic-settings", extras = ["yaml"], specifier = ">=2.10.1" },
     { name = "redis", extras = ["hiredis"], specifier = ">=6.0.0" },
+    { name = "ruff", specifier = ">=0.11.12" },
     { name = "typer", specifier = ">=0.15.2" },
     { name = "types-redis", specifier = ">=4.6.0.20241004" },
 ]

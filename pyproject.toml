@@ -8,6 +8,7 @@ dependencies = [
     "fastapi[standard]>=0.115.12",
     "pydantic-settings[yaml]>=2.10.1",
     "redis[hiredis]>=6.0.0",
+    "ruff>=0.11.12",
     "typer>=0.15.2",
     "types-redis>=4.6.0.20241004",
 ]
@@ -30,7 +31,8 @@ required-version = "~=0.8.2"
 minversion = "8.3"
 addopts = ["-ra", "--strict-markers"]
 markers = [
-    "apitest: test any api call"
+    "apitest: test any api call",
+    "templatetest: test any http HTML template page"
 ]
 
 [tool.mypy]
