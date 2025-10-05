@@ -18,7 +18,7 @@ def get_page_add_movie_to_catalog(request: Request) -> HTMLResponse:
     context: dict[str, Any] = {}
     model_schema = MovieCreate.model_json_schema()
     context.update(model_schema=model_schema)
-    return templates.TemplateResponse(
+    return templates.TemplateResponse(  # type: ignore
         request=request,
         name="movie-catalog/create.html",
         context=context,
@@ -26,7 +26,7 @@ def get_page_add_movie_to_catalog(request: Request) -> HTMLResponse:
 
 
 def format_pydantic_errors(error: ValidationError) -> dict[str, str]:
-    return {err["loc"][0]: err["msg"] for err in error.errors()}
+    return {f"{err["loc"][0]}": err["msg"] for err in error.errors()}
 
 
 def create_view_validation_response(
@@ -43,7 +43,7 @@ def create_view_validation_response(
         errors=errors,
         form_validated=form_validated,
     )
-    return templates.TemplateResponse(
+    return templates.TemplateResponse(  # type: ignore
         request=request,
         name="movie-catalog/create.html",
         context=context,

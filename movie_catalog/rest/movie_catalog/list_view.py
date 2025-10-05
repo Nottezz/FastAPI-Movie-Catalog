@@ -13,7 +13,7 @@ def list_view(request: Request, storage: GetMovieCatalogStorage) -> HTMLResponse
     context: dict[str, Any] = {}
     movie_catalog = storage.get()
     context.update(movie_catalog=movie_catalog)
-    return templates.TemplateResponse(
+    return templates.TemplateResponse(  # type: ignore[no-any-return]
         request=request,
         name="movie-catalog/list.html",
         context=context,

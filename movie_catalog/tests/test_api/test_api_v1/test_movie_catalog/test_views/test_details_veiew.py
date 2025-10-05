@@ -77,7 +77,7 @@ class TestPartialUpdate:
         assert response.status_code == status.HTTP_200_OK, response.text
         movie_from_db = storage.get_by_slug(movie.slug)
         assert movie_from_db != movie_before_update
-        assert movie_from_db.description == new_description  # type: ignore
+        assert movie_from_db.description == new_description
 
 
 class TestUpdate:
@@ -135,5 +135,5 @@ class TestUpdate:
         assert response.status_code == status.HTTP_200_OK, response.text
         movie_from_db = storage.get_by_slug(movie.slug)
         assert movie_from_db != movie_before_update
-        assert movie_from_db.description == new_description  # type: ignore
-        assert movie_from_db.title == new_title  # type: ignore
+        assert movie_from_db.description == new_description
+        assert movie_from_db.title == new_title

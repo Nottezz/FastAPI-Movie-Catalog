@@ -22,7 +22,7 @@ router: APIRouter = APIRouter(
     response_model=list[MovieRead],
 )
 def get_movie_list() -> list[Movie]:
-    return storage.get()
+    return storage.get()  # type: ignore[no-any-return]
 
 
 @router.post(
@@ -69,7 +69,7 @@ def add_movie(
     movie_create: MovieCreate,
 ) -> Movie:
     try:
-        return storage.create_or_rise_if_exists(movie_create)
+        return storage.create_or_rise_if_exists(movie_create)  # type: ignore[no-any-return]
     except MovieAlreadyExists:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,

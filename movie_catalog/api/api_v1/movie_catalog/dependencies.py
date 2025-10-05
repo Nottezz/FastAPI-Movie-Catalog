@@ -65,7 +65,7 @@ def api_token_or_user_basic_auth_required(
     ] = None,
 ) -> None:
     if credentials:
-        return validate_basic_auth(credentials=credentials)
+        return validate_basic_auth(credentials=credentials)  # type: ignore[no-any-return]
     if api_token:
         return validate_api_token(api_token=api_token)
 

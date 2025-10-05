@@ -69,7 +69,7 @@ def update_movie(
     movie: MovieBySlug,
     movie_updated: MovieUpdate,
 ) -> Movie:
-    return storage.update(movie, movie_updated)
+    return storage.update(movie, movie_updated)  # type: ignore[no-any-return]
 
 
 @router.patch(
@@ -83,7 +83,7 @@ def partial_update_movie(
     movie: MovieBySlug,
     movie_partial: MoviePartialUpdate,
 ) -> Movie:
-    return storage.partial_update(movie, movie_partial)
+    return storage.partial_update(movie, movie_partial)  # type: ignore[no-any-return]
 
 
 @router.delete(
