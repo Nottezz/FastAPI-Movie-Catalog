@@ -1,0 +1,70 @@
+{% macro form_field(field_name, field_schema, is_required, validated=False, error=None, value=None) %}
+  {% set input_type = "text" %}
+  {% if "rating" in field_name %}
+    {% set input_type = "number" %}
+    {% set min_value = 0 %}
+    {% set max_value = 10 %}
+    {% set step_value = 0.1 %}
+  {% elif "year" in field_name %}
+    {% set input_type = "number" %}
+    {% set min_value = 1900 %}
+    {% set max_value = 2100 %}
+    {% set step_value = 1 %}
+  {% endif %}
+
+
+  {% set icon_class = "" %}
+  {% if "title" in field_name %}
+    {% set icon_class = "bi bi-film" %}
+  {% elif "description" in field_name %}
+    {% set icon_class = "bi bi-card-text" %}
+  {% elif "year" in field_name %}
+    {% set icon_class = "bi bi-calendar3" %}
+  {% elif "rating" in field_name %}
+    {% set icon_class = "bi bi-bar-chart-line" %}
+  {% elif "link" in field_name %}
+    {% set icon_class = "bi bi-link-45deg" %}
+  {% elif "slug" in field_name %}
+    {% set icon_class = "bi bi-tag" %}
+  {% endif %}
+
+  {% if "description" in field_name %}
+    <div class="form-floating mb-3">
+      <textarea
+        class="form-control {% if validated %}{% if error %}is-invalid{% else %}is-valid{% endif %}{% endif %}"
+        id="{{ field_name }}"
+        name="{{ field_name }}"
+        style="height: 120px;"
+        {% if is_required %}required{% endif %}
+        placeholder="{{ field_schema.title }}">{{ value or '' }}</textarea>
+      <label for="{{ field_name }}">
+        <i class="{{ icon_class }} me-1"></i>{{ field_schema.title }}
+      </label>
+      {% if validated and error %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="form-floating mb-3 {% if validated %}has-validation{% endif %}">
+      <input
+        type="{{ input_type }}"
+        class="form-control {% if validated %}{% if error %}is-invalid{% else %}is-valid{% endif %}{% endif %}"
+        id="{{ field_name }}"
+        name="{{ field_name }}"
+        {% if value != None %}value="{{ value }}"{% endif %}
+        {% if is_required %}required{% endif %}
+        {% if field_schema.get("minLength") is not none %}minlength="{{ field_schema.minLength }}"{% endif %}
+        {% if field_schema.get("maxLength") is not none %}maxlength="{{ field_schema.maxLength }}"{% endif %}
+        {% if min_value is defined %}min="{{ min_value }}"{% endif %}
+        {% if max_value is defined %}max="{{ max_value }}"{% endif %}
+        {% if step_value is defined %}step="{{ step_value }}"{% endif %}
+        placeholder="{{ field_schema.title }}">
+      <label for="{{ field_name }}">
+        <i class="{{ icon_class }} me-1"></i>{{ field_schema.title }}
+      </label>
+      {% if validated and error %}
+        <div class="invalid-feedback">{{ error }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
