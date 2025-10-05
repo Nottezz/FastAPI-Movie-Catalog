@@ -9,7 +9,7 @@ class MovieBase(BaseModel):
     description: str
     year_released: int
     rating: float
-    original_link: AnyHttpUrl
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieCreate(MovieBase):
