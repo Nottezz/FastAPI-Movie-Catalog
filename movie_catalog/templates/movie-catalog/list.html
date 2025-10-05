@@ -15,13 +15,13 @@
           <div class="table-responsive">
             <table class="table table-striped align-middle mb-0">
               <thead class="table-dark text-center">
-                <tr>
-                  <th scope="col" style="width: 20%;">Title</th>
-                  <th scope="col" style="width: 40%;">Description</th>
-                  <th scope="col" style="width: 10%;">Year</th>
-                  <th scope="col" style="width: 10%;">Rating</th>
-                  <th scope="col" style="width: 20%;">Original Link</th>
-                </tr>
+              <tr>
+                <th scope="col" style="width: 20%;">Title</th>
+                <th scope="col" style="width: 40%;">Description</th>
+                <th scope="col" style="width: 10%;">Year</th>
+                <th scope="col" style="width: 10%;">Rating</th>
+                <th scope="col" style="width: 20%;">Original Link</th>
+              </tr>
               </thead>
               <tbody>
               {% for movie in movie_catalog %}
@@ -74,9 +74,16 @@
           </div>
         </div>
       </div>
+      <div class="my-3">
+        <a href="{{ url_for("movie-catalog:create-view") }}" class="btn btn-outline-primary">Add movie to Rating</a>
+      </div>
     {% else %}
       <div class="alert alert-warning mt-5 text-center fw-bold" role="alert">
         There are no films in the catalog 😥
+        <div class="my-3">
+          <a href="{{ url_for("movie-catalog:create-view") }}" class="btn btn-outline-primary">Add first movie to
+            Rating</a>
+        </div>
       </div>
     {% endif %}
   </div>
