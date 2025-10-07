@@ -1,11 +1,11 @@
 import logging
 from typing import cast
 
-from exceptions import MovieAlreadyExists
 from pydantic import BaseModel
 from redis import Redis
 
 from movie_catalog.config import settings
+from movie_catalog.exceptions import MovieAlreadyExists
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,
