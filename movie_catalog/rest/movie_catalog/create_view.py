@@ -1,54 +1,24 @@
-from typing import Any, Mapping
-
 from dependencies.movie_catalog import GetMovieCatalogStorage
 from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 from schemas.movie_catalog import MovieCreate
-from templating import templates
+from services.movie_catalog.form_response_helper import FormResponseHelper
 
 router = APIRouter(
     prefix="/create",
 )
 
+form_response = FormResponseHelper(
+    model=MovieCreate,
+    template_name="movie-catalog/create.html",
+)
+
 
 @router.get("/", name="movie-catalog:create-view")
 def get_page_add_movie_to_catalog(request: Request) -> HTMLResponse:
-    context: dict[str, Any] = {}
-    model_schema = MovieCreate.model_json_schema()
-    context.update(model_schema=model_schema)
-    return templates.TemplateResponse(  # type: ignore
-        request=request,
-        name="movie-catalog/create.html",
-        context=context,
-    )
-
-
-def format_pydantic_errors(error: ValidationError) -> dict[str, str]:
-    return {f"{err["loc"][0]}": err["msg"] for err in error.errors()}
-
-
-def create_view_validation_response(
-    request: Request,
-    form_data: BaseModel | Mapping[str, Any] | None = None,
-    errors: dict[str, str] | None = None,
-    form_validated: bool = True,
-) -> HTMLResponse:
-    context: dict[str, Any] = {}
-    model_schema = MovieCreate.model_json_schema()
-    context.update(
-        model_schema=model_schema,
-        form_data=form_data,
-        errors=errors,
-        form_validated=form_validated,
-    )
-    return templates.TemplateResponse(  # type: ignore
-        request=request,
-        name="movie-catalog/create.html",
-        context=context,
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    )
+    return form_response.render(request)
 
 
 @router.post("/", name="movie-catalog:create", response_model=None)
@@ -59,9 +29,11 @@ async def add_movie(
         try:
             movie_create = MovieCreate.model_validate(form)
         except ValidationError as e:
-            errors = format_pydantic_errors(e)
-            return create_view_validation_response(
-                request=request, errors=errors, form_data=form
+            return form_response.render(
+                request=request,
+                form_data=form,
+                pydantic_error=e,
+                form_validated=True,
             )
 
     try:
@@ -75,6 +47,9 @@ async def add_movie(
             url=request.url_for("movie-catalog:list"),
             status_code=status.HTTP_303_SEE_OTHER,
         )
-    return create_view_validation_response(
-        errors=errors, request=request, form_data=movie_create
+    return form_response.render(
+        request=request,
+        errors=errors,
+        form_data=movie_create,
+        form_validated=True,
     )
