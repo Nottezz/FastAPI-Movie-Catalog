@@ -1,7 +1,6 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, status
-from storage.movie_catalog.crud import storage
 
 from movie_catalog.api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
@@ -13,6 +12,7 @@ from movie_catalog.schemas.movie_catalog import (
     MovieRead,
     MovieUpdate,
 )
+from movie_catalog.storage.movie_catalog.crud import storage
 
 router = APIRouter(
     prefix="/{slug}",
@@ -69,7 +69,7 @@ def update_movie(
     movie: MovieBySlug,
     movie_updated: MovieUpdate,
 ) -> Movie:
-    return storage.update(movie, movie_updated)  # type: ignore[no-any-return]
+    return storage.update(movie, movie_updated)
 
 
 @router.patch(
@@ -83,7 +83,7 @@ def partial_update_movie(
     movie: MovieBySlug,
     movie_partial: MoviePartialUpdate,
 ) -> Movie:
-    return storage.partial_update(movie, movie_partial)  # type: ignore[no-any-return]
+    return storage.partial_update(movie, movie_partial)
 
 
 @router.delete(

@@ -2,7 +2,8 @@ from typing import Any
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from templating.jinja_templates import templates
+
+from movie_catalog.templating.jinja_templates import templates
 
 router = APIRouter()
 
@@ -21,7 +22,7 @@ def home_page(
     context.update(
         features=features,
     )
-    return templates.TemplateResponse(  # type: ignore[no-any-return]
+    return templates.TemplateResponse(
         request=request, name="home.html", context=context
     )
 
@@ -30,4 +31,4 @@ def home_page(
 def about_page(
     request: Request,
 ) -> HTMLResponse:
-    return templates.TemplateResponse(request=request, name="about.html")  # type: ignore[no-any-return]
+    return templates.TemplateResponse(request=request, name="about.html")

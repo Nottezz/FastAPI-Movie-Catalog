@@ -5,9 +5,9 @@ from os import getenv
 from typing import Generator
 
 import pytest
-from storage.movie_catalog.crud import storage
 
 from movie_catalog.schemas.movie_catalog import Movie, MovieCreate
+from movie_catalog.storage.movie_catalog.crud import storage
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -60,14 +60,14 @@ def create_movie(
     description: str = "Some description for unit-test",
     title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create(slug, description, title))  # type: ignore[no-any-return]
+    return storage.create(build_movie_create(slug, description, title))
 
 
 def create_movie_random_slug(
     description: str = "Some description for unit-test",
     title: str = "Some title",
 ) -> Movie:
-    return storage.create(build_movie_create_random_slug(description, title))  # type: ignore[no-any-return]
+    return storage.create(build_movie_create_random_slug(description, title))
 
 
 @pytest.fixture()

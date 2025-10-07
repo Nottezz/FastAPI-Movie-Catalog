@@ -1,17 +1,17 @@
 import logging
 from typing import Annotated
 
-from dependencies.auth import user_basic_auth, validate_basic_auth
 from fastapi import Depends, HTTPException, status
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     HTTPBasicCredentials,
     HTTPBearer,
 )
-from services.auth import redis_tokens
-from storage.movie_catalog.crud import storage
 
+from movie_catalog.dependencies.auth import user_basic_auth, validate_basic_auth
 from movie_catalog.schemas.movie_catalog import Movie
+from movie_catalog.services.auth import redis_tokens
+from movie_catalog.storage.movie_catalog.crud import storage
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +65,7 @@ def api_token_or_user_basic_auth_required(
     ] = None,
 ) -> None:
     if credentials:
-        return validate_basic_auth(credentials=credentials)  # type: ignore[no-any-return]
+        return validate_basic_auth(credentials=credentials)
     if api_token:
         return validate_api_token(api_token=api_token)
 

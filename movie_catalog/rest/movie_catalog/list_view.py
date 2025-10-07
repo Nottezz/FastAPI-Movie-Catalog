@@ -3,7 +3,8 @@ from typing import Any
 from dependencies.movie_catalog import GetMovieCatalogStorage
 from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
-from templating import templates
+
+from movie_catalog.templating import templates
 
 router = APIRouter()
 
@@ -13,7 +14,7 @@ def list_view(request: Request, storage: GetMovieCatalogStorage) -> HTMLResponse
     context: dict[str, Any] = {}
     movie_catalog = storage.get()
     context.update(movie_catalog=movie_catalog)
-    return templates.TemplateResponse(  # type: ignore[no-any-return]
+    return templates.TemplateResponse(
         request=request,
         name="movie-catalog/list.html",
         context=context,

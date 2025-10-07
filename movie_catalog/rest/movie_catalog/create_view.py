@@ -4,7 +4,8 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from pydantic import ValidationError
 from schemas.movie_catalog import MovieCreate
-from services.movie_catalog.form_response_helper import FormResponseHelper
+
+from movie_catalog.services.movie_catalog.form_response_helper import FormResponseHelper
 
 router = APIRouter(
     prefix="/create",
