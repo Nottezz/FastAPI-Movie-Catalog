@@ -1,5 +1,4 @@
 from dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
-from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from pydantic import ValidationError
@@ -32,33 +31,25 @@ def get_page_update_movie_to_catalog(
 
 @router.post("/", name="movie-catalog:update", response_model=None)
 async def update_movie(
-    request: Request, storage: GetMovieCatalogStorage
+    request: Request,
+    movie: MovieBySlug,
+    storage: GetMovieCatalogStorage,
 ) -> RedirectResponse | HTMLResponse:
     async with request.form() as form:
         try:
-            movie_create = MovieUpdate.model_validate(form)
+            movie_update = MovieUpdate.model_validate(form)
         except ValidationError as e:
             return form_response.render(
                 request=request,
                 form_data=form,
                 pydantic_error=e,
                 form_validated=True,
+                movie=movie,
             )
 
-    try:
-        storage.create_or_rise_if_exists(movie_create)
-    except MovieAlreadyExists:
-        errors = {
-            "slug": f"Movie with slug '{movie_create.slug}' already exists.",
-        }
-    else:
-        return RedirectResponse(
-            url=request.url_for("movie-catalog:list"),
-            status_code=status.HTTP_303_SEE_OTHER,
-        )
-    return form_response.render(
-        request=request,
-        errors=errors,
-        form_data=movie_create,
-        form_validated=True,
+    storage.update(movie, movie_update)
+
+    return RedirectResponse(
+        url=request.url_for("movie-catalog:list"),
+        status_code=status.HTTP_303_SEE_OTHER,
     )

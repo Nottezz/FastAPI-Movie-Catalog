@@ -14,7 +14,7 @@
           </div>
 
           {{ render_form(
-          action="",
+          action=url_for("movie-catalog:update", slug=movie.slug),
           button_text="Update"
           ) }}
 
