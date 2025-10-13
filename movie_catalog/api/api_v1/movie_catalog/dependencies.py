@@ -9,9 +9,7 @@ from fastapi.security import (
 )
 
 from movie_catalog.dependencies.auth import user_basic_auth, validate_basic_auth
-from movie_catalog.schemas.movie_catalog import Movie
 from movie_catalog.services.auth import redis_tokens
-from movie_catalog.storage.movie_catalog.crud import storage
 
 logger = logging.getLogger(__name__)
 
@@ -20,15 +18,6 @@ static_api_token = HTTPBearer(
     description="Your **Static API token** from the developer portal. [Read more](#)",
     auto_error=False,
 )
-
-
-def prefetch_film(slug: str) -> Movie:
-    films: Movie | None = storage.get_by_slug(slug)
-    if films:
-        return films
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f"Movie {slug!r} not found"
-    )
 
 
 def validate_api_token(api_token: HTTPAuthorizationCredentials) -> None:

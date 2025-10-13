@@ -1,4 +1,4 @@
-from dependencies.movie_catalog import GetMovieCatalogStorage
+from dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
 from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -18,8 +18,16 @@ form_response = FormResponseHelper(
 
 
 @router.get("/", name="movie-catalog:update-view")
-def get_page_update_movie_to_catalog(request: Request) -> HTMLResponse:
-    return form_response.render(request)
+def get_page_update_movie_to_catalog(
+    request: Request,
+    movie: MovieBySlug,
+) -> HTMLResponse:
+    form = MovieUpdate(**movie.model_dump())
+    return form_response.render(
+        request,
+        form_data=form,
+        movie=movie,
+    )
 
 
 @router.post("/", name="movie-catalog:update", response_model=None)
