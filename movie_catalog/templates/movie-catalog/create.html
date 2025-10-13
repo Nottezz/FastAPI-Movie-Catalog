@@ -1,4 +1,4 @@
-{% from "macros/form-fields.html" import form_field %}
+{% from "movie-catalog/macros/form.html" import render_form with context %}
 {% extends "base.html" %}
 {% block title %}Add new Movie{% endblock %}
 
@@ -13,30 +13,10 @@
             </h4>
           </div>
 
-          <div class="card-body p-4">
-            <form action="{{ url_for('movie-catalog:create') }}" method="post" novalidate>
-              {% for field_name, field_schema in model_schema.properties.items() %}
-                {% set is_required = field_name in model_schema.get("required") or [] %}
-                {{ form_field(
-                  field_name=field_name,
-                  field_schema=field_schema,
-                  is_required=is_required,
-                  validated=form_validated,
-                  error=errors and errors[field_name] or None,
-                  value=form_data and form_data[field_name] or field_schema.default
-                ) }}
-              {% endfor %}
-
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg shadow-sm">
-                  <i class="bi bi-check-circle me-1"></i> Create
-                </button>
-                <a href="{{ url_for('movie-catalog:list') }}" class="btn btn-outline-secondary mt-3">
-                  <i class="bi bi-arrow-left me-1"></i> Back to Rating list
-                </a>
-              </div>
-            </form>
-          </div>
+          {{ render_form(
+          action=url_for('movie-catalog:create'),
+          button_text="Create"
+          ) }}
 
           <div class="card-footer text-muted small text-center">
             <i class="bi bi-info-circle me-1"></i>
