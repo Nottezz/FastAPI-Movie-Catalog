@@ -1,0 +1,34 @@
+<div class="modal fade" id="modal-confirm-delete-{{ movie.slug }}" tabindex="-1" aria-labelledby="modal-confirm-delete-{{ movie.slug }}-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-danger-subtle">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="modal-confirm-delete-{{ movie.slug }}-label">Deleting a movie {{ movie.title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="mb-3">
+          Are you sure you want to delete this movie?
+          This action <strong>cannot be undone</strong>.
+        </p>
+
+        <div class="alert alert-warning py-2" role="alert">
+          To confirm the deletion, enter the movie name:
+          <strong id="movieNameToConfirm">{{ movie.title }}</strong>
+        </div>
+
+        <input
+          type="text"
+          id="movieNameInput"
+          class="form-control"
+          placeholder="Enter the movie name"
+        >
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Permanently delete</button>
+      </div>
+    </div>
+  </div>
+</div>
