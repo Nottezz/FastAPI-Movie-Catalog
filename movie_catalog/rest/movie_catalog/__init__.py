@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends
 
 from .create_view import router as create_router
 from .list_view import router as list_router
+from .update_view import router as update_router
 
 router = APIRouter(
     prefix="/movie-catalog",
@@ -13,3 +14,4 @@ router = APIRouter(
 )
 router.include_router(list_router)
 router.include_router(create_router)
+router.include_router(update_router)
