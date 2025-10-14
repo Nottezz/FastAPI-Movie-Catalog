@@ -62,7 +62,11 @@ jobs:
         run: uv sync --locked --all-extras --dev
 
       - name: Run python tests
-        run: uv run pytest movie_catalog --cov=movie_catalog --cov-report=xml:coverage.xml
+        run: |
+          uv run pytest \
+            --cov=movie_catalog \
+            --cov-report=term-missing \
+            --cov-report=xml:coverage.xml
         env:
           TESTING: 1
           MOVIE_CATALOG__REDIS__CONNECTION__HOST: redis
@@ -82,6 +86,8 @@ jobs:
     needs:
       - run-tests
     steps:
+      - uses: actions/checkout@v4
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
