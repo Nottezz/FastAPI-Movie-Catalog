@@ -1,2 +1,2 @@
 @echo off
-uv run --script manage.py %*
+uv run --script movie_catalog/manage.py %*

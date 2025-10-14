@@ -4,15 +4,15 @@ from unittest import TestCase
 
 import pytest
 
-from movie_catalog.api.api_v1.movie_catalog.crud import (
-    MovieCatalogAlreadyExists,
-    storage,
-)
+from movie_catalog.exceptions import MovieAlreadyExists
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,
     MoviePartialUpdate,
     MovieUpdate,
+)
+from movie_catalog.storage.movie_catalog.crud import (
+    storage,
 )
 from movie_catalog.tests.conftest import build_movie_create_random_slug
 
@@ -99,7 +99,7 @@ class MovieCatalogStorageGetMoviesTestCase(TestCase):
 
 def test_create_or_raise_if_exists(movie: Movie) -> None:
     movie_create = MovieCreate(**movie.model_dump())
-    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+    with pytest.raises(MovieAlreadyExists, match=movie_create.slug) as exc_info:
         storage.create_or_rise_if_exists(movie_create)
 
     assert exc_info.value.args[0] == movie_create.slug
@@ -108,7 +108,7 @@ def test_create_or_raise_if_exists(movie: Movie) -> None:
 def test_create_twice() -> None:
     movie_create = build_movie_create_random_slug()
     storage.create_or_rise_if_exists(movie_create)
-    with pytest.raises(MovieCatalogAlreadyExists, match=movie_create.slug) as exc_info:
+    with pytest.raises(MovieAlreadyExists, match=movie_create.slug) as exc_info:
         storage.create_or_rise_if_exists(movie_create)
 
     assert exc_info.value.args == (movie_create.slug,)

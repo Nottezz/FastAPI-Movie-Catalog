@@ -1,0 +1,29 @@
+{% from "movie-catalog/macros/form.html" import render_form with context %}
+{% extends "base.html" %}
+{% block title %}Add new Movie{% endblock %}
+
+{% block main %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0">
+          <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0">
+              Add new movie
+            </h4>
+          </div>
+
+          {{ render_form(
+          action=url_for('movie-catalog:create'),
+          button_text="Create"
+          ) }}
+
+          <div class="card-footer text-muted small text-center">
+            <i class="bi bi-info-circle me-1"></i>
+            Fill out the form to add a movie to the catalog.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

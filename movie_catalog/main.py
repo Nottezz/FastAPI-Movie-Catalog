@@ -1,11 +1,12 @@
 import logging
 
 from fastapi import FastAPI
+from starlette.middleware.sessions import SessionMiddleware
 
 from movie_catalog.api import router as api_router
-from movie_catalog.api.main_view import router as main_router
 from movie_catalog.app_lifespan import lifespan
 from movie_catalog.config import settings
+from movie_catalog.rest import router as rest_router
 
 logging.basicConfig(
     format=settings.logging.log_format,
@@ -19,5 +20,9 @@ app = FastAPI(
     version="1.0",
     lifespan=lifespan,
 )
-app.include_router(main_router)
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.session.secret_key,
+)
+app.include_router(rest_router)
 app.include_router(api_router)

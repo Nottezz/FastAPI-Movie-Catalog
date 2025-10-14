@@ -1,0 +1,30 @@
+<div class="modal fade" id="modal-confirm-delete-{{ movie.slug }}" tabindex="-1"
+     aria-labelledby="modal-confirm-delete-{{ movie.slug }}-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-danger-subtle">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="modal-confirm-delete-{{ movie.slug }}-label">
+          Deleting a movie {{ movie.title }}
+        </h5>
+      </div>
+
+      <div class="modal-body text-center">
+        <p class="mb-3">
+          Are you sure you want to delete <strong>{{ movie.title }}</strong> movie?
+          This action <u>cannot be undone</u>.
+        </p>
+      </div>
+
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit"
+                class="btn btn-danger"
+                hx-delete="{{ url_for('movie-catalog:delete', slug=movie.slug) }}"
+                hx-target="closest tr"
+                hx-swap="outerHTML swap:0.5s"
+                data-bs-dismiss="modal">Permanently delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

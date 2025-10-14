@@ -3,8 +3,8 @@ from collections.abc import Generator
 import pytest
 from fastapi.testclient import TestClient
 
-from movie_catalog.api.api_v1.auth.services import redis_tokens
 from movie_catalog.main import app
+from movie_catalog.services.auth import redis_tokens
 
 
 @pytest.fixture()

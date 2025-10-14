@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import AnyHttpUrl, BaseModel, Field
 
 DESCRIPTION_MAX_LENGTH = 500
 DESCRIPTION_MIN_LENGTH = 20
@@ -9,6 +9,7 @@ class MovieBase(BaseModel):
     description: str
     year_released: int
     rating: float
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieCreate(MovieBase):
@@ -20,17 +21,17 @@ class MovieCreate(MovieBase):
         ...,
         min_length=3,
         max_length=50,
-        title="Movie slug",
+        title="Slug",
     )
     title: str = Field(
         ...,
         min_length=3,
         max_length=50,
-        title="Movie title",
+        title="Title",
     )
     description: str = Field(
         ...,
-        title="Movie description",
+        title="Description",
         min_length=DESCRIPTION_MIN_LENGTH,
         max_length=DESCRIPTION_MAX_LENGTH,
     )
@@ -44,13 +45,45 @@ class MovieCreate(MovieBase):
         1.0,
         ge=0.0,
         le=10.0,
-        title="Movie rating",
+        title="Rating",
     )
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieUpdate(MovieBase):
     """
     Модель для обновления фильма
+    """
+
+    title: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+        title="Title",
+    )
+    description: str = Field(
+        ...,
+        title="Description",
+        min_length=20,
+        max_length=500,
+    )
+    year_released: int = Field(
+        1900,
+        ge=0,
+        le=9999,
+        title="Year released",
+    )
+    rating: float = Field(
+        1.0,
+        ge=0.0,
+        le=10.0,
+        title="Rating",
+    )
+
+
+class MovieUpdateForm(MovieBase):
+    """
+    Модель для обновления фильма в форме
     """
 
     title: str = Field(
@@ -71,8 +104,8 @@ class MovieUpdate(MovieBase):
         le=9999,
         title="Year released",
     )
-    rating: float = Field(
-        1.0,
+    rating: float | None = Field(  # type: ignore[assignment]
+        None,
         ge=0.0,
         le=10.0,
         title="Movie rating",
@@ -108,6 +141,7 @@ class MoviePartialUpdate(BaseModel):
         le=10.0,
         title="Movie rating",
     )
+    original_link: AnyHttpUrl | None = None
 
 
 class MovieRead(MovieBase):

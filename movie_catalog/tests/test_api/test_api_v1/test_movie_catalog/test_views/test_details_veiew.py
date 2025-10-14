@@ -5,7 +5,6 @@ from _pytest.fixtures import SubRequest
 from fastapi import status
 from fastapi.testclient import TestClient
 
-from movie_catalog.api.api_v1.movie_catalog.crud import storage
 from movie_catalog.main import app
 from movie_catalog.schemas.movie_catalog import (
     DESCRIPTION_MAX_LENGTH,
@@ -13,6 +12,7 @@ from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieUpdate,
 )
+from movie_catalog.storage.movie_catalog.crud import storage
 from movie_catalog.tests.conftest import create_movie, create_movie_random_slug
 
 pytestmark = pytest.mark.apitest
@@ -77,7 +77,7 @@ class TestPartialUpdate:
         assert response.status_code == status.HTTP_200_OK, response.text
         movie_from_db = storage.get_by_slug(movie.slug)
         assert movie_from_db != movie_before_update
-        assert movie_from_db.description == new_description  # type: ignore
+        assert movie_from_db.description == new_description  # type: ignore[union-attr]
 
 
 class TestUpdate:
@@ -135,5 +135,5 @@ class TestUpdate:
         assert response.status_code == status.HTTP_200_OK, response.text
         movie_from_db = storage.get_by_slug(movie.slug)
         assert movie_from_db != movie_before_update
-        assert movie_from_db.description == new_description  # type: ignore
-        assert movie_from_db.title == new_title  # type: ignore
+        assert movie_from_db.description == new_description  # type: ignore[union-attr]
+        assert movie_from_db.title == new_title  # type: ignore[union-attr]

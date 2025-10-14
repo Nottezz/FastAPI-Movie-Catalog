@@ -67,6 +67,7 @@ jobs:
           TESTING: 1
           MOVIE_CATALOG__REDIS__CONNECTION__HOST: redis
           MOVIE_CATALOG__REDIS__CONNECTION__PORT: 6379
+          MOVIE_CATALOG__SESSION__SECRET_KEY: "abc"
 
       - name: Upload artefacts
         uses: actions/upload-artifact@v4
