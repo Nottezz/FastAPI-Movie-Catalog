@@ -1,9 +1,10 @@
 import logging
 
-from dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
 from fastapi import APIRouter, Request, Response, status
-from misc.flash_messages import flash
 from starlette.requests import Request
+
+from movie_catalog.dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
+from movie_catalog.misc.flash_messages import flash
 
 logger = logging.getLogger(__name__)
 router = APIRouter(

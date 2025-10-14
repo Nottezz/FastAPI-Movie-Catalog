@@ -1,9 +1,9 @@
 from typing import Any
 
-from dependencies.movie_catalog import GetMovieCatalogStorage
 from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
 
+from movie_catalog.dependencies.movie_catalog import GetMovieCatalogStorage
 from movie_catalog.templating import templates
 
 router = APIRouter()

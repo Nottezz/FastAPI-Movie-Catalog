@@ -1,5 +1,6 @@
-from dependencies.auth import user_basic_auth_required_for_unsafe_methods
 from fastapi import APIRouter, Depends
+
+from movie_catalog.dependencies.auth import user_basic_auth_required_for_unsafe_methods
 
 from .create_view import router as create_router
 from .delete_view import router as delete_router

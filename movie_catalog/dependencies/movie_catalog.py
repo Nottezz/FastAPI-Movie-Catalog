@@ -1,10 +1,11 @@
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request
-from schemas.movie_catalog import Movie
 from starlette import status
-from storage.movie_catalog import MovieCatalogStorage
-from storage.movie_catalog.crud import storage
+
+from movie_catalog.schemas.movie_catalog import Movie
+from movie_catalog.storage.movie_catalog import MovieCatalogStorage
+from movie_catalog.storage.movie_catalog.crud import storage
 
 
 def get_movie_catalog_storage(

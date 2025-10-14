@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from services.auth import redis_tokens
+from movie_catalog.services.auth import redis_tokens
 
 
 class RedisTokensHelperTestCase(TestCase):

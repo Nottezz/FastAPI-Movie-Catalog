@@ -1,9 +1,10 @@
 from datetime import date
 
-from config import BASE_DIR
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
-from misc.flash_messages import get_flashed_messages
+
+from movie_catalog.config import BASE_DIR
+from movie_catalog.misc.flash_messages import get_flashed_messages
 
 
 def inject_current_date(

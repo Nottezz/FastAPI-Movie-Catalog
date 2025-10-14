@@ -1,4 +1,4 @@
-from dependencies.auth import UNSAFE_METHOD
+from movie_catalog.dependencies.auth import UNSAFE_METHOD
 
 
 class TestUnsafeMethods:

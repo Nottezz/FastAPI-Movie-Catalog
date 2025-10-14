@@ -1,9 +1,9 @@
-from dependencies.movie_catalog import MovieBySlug
 from fastapi import APIRouter, Depends, status
 
 from movie_catalog.api.api_v1.movie_catalog.dependencies import (
     api_token_or_user_basic_auth_required,
 )
+from movie_catalog.dependencies.movie_catalog import MovieBySlug
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MoviePartialUpdate,

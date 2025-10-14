@@ -1,11 +1,11 @@
-from dependencies.movie_catalog import GetMovieCatalogStorage
-from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
-from misc.flash_messages import flash
 from pydantic import ValidationError
-from schemas.movie_catalog import MovieCreate
 
+from movie_catalog.dependencies.movie_catalog import GetMovieCatalogStorage
+from movie_catalog.exceptions import MovieAlreadyExists
+from movie_catalog.misc.flash_messages import flash
+from movie_catalog.schemas.movie_catalog import MovieCreate
 from movie_catalog.services.movie_catalog.form_response_helper import FormResponseHelper
 
 router = APIRouter(

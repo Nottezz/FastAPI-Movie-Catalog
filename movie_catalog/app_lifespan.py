@@ -1,9 +1,10 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from config import settings
 from fastapi import FastAPI
-from storage.movie_catalog import MovieCatalogStorage
+
+from movie_catalog.config import settings
+from movie_catalog.storage.movie_catalog import MovieCatalogStorage
 
 
 @asynccontextmanager

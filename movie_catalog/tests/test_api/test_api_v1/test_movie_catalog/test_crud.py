@@ -3,16 +3,16 @@ from typing import ClassVar
 from unittest import TestCase
 
 import pytest
-from exceptions import MovieAlreadyExists
-from storage.movie_catalog.crud import (
-    storage,
-)
 
+from movie_catalog.exceptions import MovieAlreadyExists
 from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieCreate,
     MoviePartialUpdate,
     MovieUpdate,
+)
+from movie_catalog.storage.movie_catalog.crud import (
+    storage,
 )
 from movie_catalog.tests.conftest import build_movie_create_random_slug
 

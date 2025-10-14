@@ -4,7 +4,6 @@ import pytest
 from _pytest.fixtures import SubRequest
 from fastapi import status
 from fastapi.testclient import TestClient
-from storage.movie_catalog.crud import storage
 
 from movie_catalog.main import app
 from movie_catalog.schemas.movie_catalog import (
@@ -13,6 +12,7 @@ from movie_catalog.schemas.movie_catalog import (
     Movie,
     MovieUpdate,
 )
+from movie_catalog.storage.movie_catalog.crud import storage
 from movie_catalog.tests.conftest import create_movie, create_movie_random_slug
 
 pytestmark = pytest.mark.apitest
