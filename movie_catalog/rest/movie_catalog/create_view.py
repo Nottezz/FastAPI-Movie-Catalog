@@ -2,6 +2,7 @@ from dependencies.movie_catalog import GetMovieCatalogStorage
 from exceptions import MovieAlreadyExists
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
+from misc.flash_messages import flash
 from pydantic import ValidationError
 from schemas.movie_catalog import MovieCreate
 
@@ -44,6 +45,11 @@ async def add_movie(
             "slug": f"Movie with slug '{movie_create.slug}' already exists.",
         }
     else:
+        flash(
+            request=request,
+            message=f"You added {movie_create.title!r} to the rating!",
+            category="success",
+        )
         request.session["message"] = f"You added {movie_create.title!r} to the rating!"
         return RedirectResponse(
             url=request.url_for("movie-catalog:list"),

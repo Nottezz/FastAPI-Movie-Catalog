@@ -9,11 +9,11 @@
       <i class="bi bi-camera-reels text-primary me-2"></i>Movies Rating
     </h1>
 
-    {% if request.session.get("message") %}
-      <div class="alert alert-info shadow-sm">
-        {{ request.session.pop("message") }}
+    {% for msg in get_flashed_messages(request) %}
+      <div class="alert alert-{{ msg.category }} shadow-sm">
+        {{ msg.message }}
       </div>
-    {% endif %}
+    {% endfor %}
 
     {% if movie_catalog %}
       <div class="card shadow-sm border-0">

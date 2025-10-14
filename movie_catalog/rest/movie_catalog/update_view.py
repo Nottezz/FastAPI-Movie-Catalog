@@ -1,6 +1,7 @@
 from dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
 from fastapi import APIRouter, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
+from misc.flash_messages import flash
 from pydantic import ValidationError
 from schemas.movie_catalog import MovieUpdate
 
@@ -48,7 +49,11 @@ async def update_movie(
             )
 
     storage.update(movie, movie_update)
-
+    flash(
+        request=request,
+        message=f"Movie {movie_update.title!r} has been updated.",
+        category="success",
+    )
     return RedirectResponse(
         url=request.url_for("movie-catalog:list"),
         status_code=status.HTTP_303_SEE_OTHER,
