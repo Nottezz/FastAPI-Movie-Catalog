@@ -104,7 +104,7 @@ class MovieUpdateForm(MovieBase):
         le=9999,
         title="Year released",
     )
-    rating: float | None = Field(
+    rating: float | None = Field(  # type: ignore[assignment]
         None,
         ge=0.0,
         le=10.0,

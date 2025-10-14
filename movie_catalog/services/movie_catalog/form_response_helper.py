@@ -36,7 +36,7 @@ class FormResponseHelper:
             form_validated=form_validated,
         )
         context.update(context_update)
-        return templates.TemplateResponse(  # type: ignore
+        return templates.TemplateResponse(
             request=request,
             name=self.template_name,
             context=context,

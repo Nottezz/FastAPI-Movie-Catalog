@@ -11,7 +11,7 @@ from movie_catalog.storage.movie_catalog.crud import storage
 def get_movie_catalog_storage(
     request: Request,
 ) -> MovieCatalogStorage:
-    return request.app.state.movie_catalog_storage
+    return request.app.state.movie_catalog_storage  # type: ignore[no-any-return]
 
 
 GetMovieCatalogStorage = Annotated[

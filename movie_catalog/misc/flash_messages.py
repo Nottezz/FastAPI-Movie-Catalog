@@ -23,4 +23,4 @@ def flash(request: Request, message: str, category: str = "info") -> None:
 
 
 def get_flashed_messages(request: Request) -> list[Message]:
-    return request.session.pop(FLASHED_MESSAGES_KEY, [])
+    return request.session.pop(FLASHED_MESSAGES_KEY, [])  # type: ignore[no-any-return]
