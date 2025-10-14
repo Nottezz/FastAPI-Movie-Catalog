@@ -17,9 +17,13 @@
 
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <form action="{{ url_for('movie-catalog:delete', slug=movie.slug) }}" method="post" class="d-inline">
-          <button type="submit" class="btn btn-danger">Permanently delete</button>
-        </form>
+        <button type="submit"
+                class="btn btn-danger"
+                hx-delete="{{ url_for('movie-catalog:delete', slug=movie.slug) }}"
+                hx-target="closest tr"
+                hx-swap="outerHTML swap:0.5s"
+                data-bs-dismiss="modal">Permanently delete
+        </button>
       </div>
     </div>
   </div>

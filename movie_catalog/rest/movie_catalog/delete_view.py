@@ -1,8 +1,7 @@
 import logging
 
 from dependencies.movie_catalog import GetMovieCatalogStorage, MovieBySlug
-from fastapi import APIRouter, Request, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import APIRouter, Response, status
 
 logger = logging.getLogger(__name__)
 router = APIRouter(
@@ -10,14 +9,13 @@ router = APIRouter(
 )
 
 
-@router.post("/", name="movie-catalog:delete", response_model=None)
+@router.delete("/", name="movie-catalog:delete", response_model=None)
 async def delete_movie(
-    request: Request,
     movie: MovieBySlug,
     storage: GetMovieCatalogStorage,
-) -> RedirectResponse | HTMLResponse:
+) -> Response:
     storage.delete(movie)
-    return RedirectResponse(
-        url=request.url_for("movie-catalog:list"),
-        status_code=status.HTTP_303_SEE_OTHER,
+    return Response(
+        status_code=status.HTTP_200_OK,
+        content="",
     )
