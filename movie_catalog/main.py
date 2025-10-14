@@ -1,12 +1,12 @@
 import logging
 
 from fastapi import FastAPI
-from rest import router as rest_router
 from starlette.middleware.sessions import SessionMiddleware
 
 from movie_catalog.api import router as api_router
 from movie_catalog.app_lifespan import lifespan
 from movie_catalog.config import settings
+from movie_catalog.rest import router as rest_router
 
 logging.basicConfig(
     format=settings.logging.log_format,
