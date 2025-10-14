@@ -53,7 +53,7 @@ class MovieCatalogStorage(BaseModel):
             **create_movie.model_dump(),
         )
         self.save_data(movie)
-        logger.debug("Add movie <%s> to catalog.", create_movie.slug)
+        logger.info("Add movie <%s> to catalog.", create_movie.slug)
         return movie
 
     def create_or_rise_if_exists(self, create_movie: MovieCreate) -> Movie:
@@ -65,7 +65,7 @@ class MovieCatalogStorage(BaseModel):
 
     def delete_by_slug(self, slug: str) -> None:
         redis.hdel(self.hast_name, slug)
-        logger.debug("Remove movie <%s> from catalog.", slug)
+        logger.info("Remove movie <%s> from catalog.", slug)
 
     def delete(self, movie: Movie) -> None:
         self.delete_by_slug(movie.slug)
@@ -74,14 +74,14 @@ class MovieCatalogStorage(BaseModel):
         for field, value in updated_movie:
             setattr(movie, field, value)
         self.save_data(movie)
-        logger.debug("Update movie <%s>.", movie.slug)
+        logger.info("Update movie <%s>.", movie.slug)
         return movie
 
     def partial_update(self, movie: Movie, updated_movie: MoviePartialUpdate) -> Movie:
         for field, value in updated_movie.model_dump(exclude_unset=True).items():
             setattr(movie, field, value)
         self.save_data(movie)
-        logger.debug("Partial update movie <%s>.", movie.slug)
+        logger.info("Partial update movie <%s>.", movie.slug)
         return movie
 
 

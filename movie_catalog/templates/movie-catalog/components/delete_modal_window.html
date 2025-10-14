@@ -1,34 +1,24 @@
-<div class="modal fade" id="modal-confirm-delete-{{ movie.slug }}" tabindex="-1" aria-labelledby="modal-confirm-delete-{{ movie.slug }}-label" aria-hidden="true">
+<div class="modal fade" id="modal-confirm-delete-{{ movie.slug }}" tabindex="-1"
+     aria-labelledby="modal-confirm-delete-{{ movie.slug }}-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content border-danger-subtle">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="modal-confirm-delete-{{ movie.slug }}-label">Deleting a movie {{ movie.title }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        <h5 class="modal-title text-danger" id="modal-confirm-delete-{{ movie.slug }}-label">
+          Deleting a movie {{ movie.title }}
+        </h5>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body text-center">
         <p class="mb-3">
-          Are you sure you want to delete this movie?
-          This action <strong>cannot be undone</strong>.
+          Are you sure you want to delete <strong>{{ movie.title }}</strong> movie?
+          This action <u>cannot be undone</u>.
         </p>
-
-        <div class="alert alert-warning py-2" role="alert">
-          To confirm the deletion, enter the movie name:
-          <strong id="movieNameToConfirm">{{ movie.title }}</strong>
-        </div>
-
-        <input
-          type="text"
-          id="movieNameInput"
-          class="form-control"
-          placeholder="Enter the movie name"
-        >
       </div>
 
-      <div class="modal-footer">
+      <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <form action="{{ url_for("movie-catalog:delete", slug=movie.slug) }}" method="post">
-        <button type="submit" class="btn btn-danger">Permanently delete</button>
+        <form action="{{ url_for('movie-catalog:delete', slug=movie.slug) }}" method="post" class="d-inline">
+          <button type="submit" class="btn btn-danger">Permanently delete</button>
         </form>
       </div>
     </div>
