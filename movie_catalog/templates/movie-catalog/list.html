@@ -9,6 +9,12 @@
       <i class="bi bi-camera-reels text-primary me-2"></i>Movies Rating
     </h1>
 
+    {% if request.session.get("message") %}
+      <div class="alert alert-info shadow-sm">
+        {{ request.session.pop("message") }}
+      </div>
+    {% endif %}
+
     {% if movie_catalog %}
       <div class="card shadow-sm border-0">
         <div class="card-body">
@@ -81,7 +87,7 @@
                         <i class="bi bi-trash me-1"></i> Delete
                       </button>
                     </div>
-                      {% include "movie-catalog/components/delete_modal_window.html" %}
+                    {% include "movie-catalog/components/delete_modal_window.html" %}
                   </td>
                 </tr>
               {% endfor %}
@@ -105,10 +111,10 @@
   </div>
 
   <style>
-    tr.htmx-swapping td {
-      opacity: 0;
-      transition: opacity 0.5s ease-out;
-    }
+      tr.htmx-swapping td {
+          opacity: 0;
+          transition: opacity 0.5s ease-out;
+      }
   </style>
   <script
     src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"

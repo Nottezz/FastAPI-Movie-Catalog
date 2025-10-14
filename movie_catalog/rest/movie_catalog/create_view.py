@@ -44,6 +44,7 @@ async def add_movie(
             "slug": f"Movie with slug '{movie_create.slug}' already exists.",
         }
     else:
+        request.session["message"] = f"You added {movie_create.title!r} to the rating!"
         return RedirectResponse(
             url=request.url_for("movie-catalog:list"),
             status_code=status.HTTP_303_SEE_OTHER,
